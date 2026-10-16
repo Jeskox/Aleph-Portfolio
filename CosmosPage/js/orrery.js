@@ -376,18 +376,32 @@ function initOrrery() {
 
     const sphereEl = document.getElementById("insp-sphere-preview");
     if (sphereEl) {
-      sphereEl.className = "w-20 h-20 celestial-sphere shrink-0";
-      sphereEl.style.background = "";
-      sphereEl.style.boxShadow = "";
-
       if (body.isBlackHole) {
-        sphereEl.classList.add("sphere-blackhole");
-      } else if (body.id === "sun") {
-        sphereEl.classList.add("sphere-sun");
+        sphereEl.className = "w-28 sm:w-36 h-20 sm:h-24 shrink-0 flex items-center justify-center relative";
+        sphereEl.style.background = "transparent";
+        sphereEl.style.boxShadow = "none";
+        sphereEl.style.border = "none";
+        sphereEl.innerHTML = `
+          <img 
+            src="images/sgr-a.png" 
+            alt="${body.name}" 
+            class="w-full h-full object-contain filter drop-shadow-[0_0_22px_rgba(245,158,11,0.5)] transition-transform duration-500 hover:scale-110" 
+          />
+        `;
       } else {
-        if (body.hasRings) sphereEl.classList.add("sphere-saturn");
-        sphereEl.style.background = `radial-gradient(circle at 30% 30%, ${body.colorCore}, ${body.colorMid} 55%, ${body.colorEdge} 95%)`;
-        sphereEl.style.boxShadow = `0 0 24px ${body.glowColor}, inset -10px -10px 22px rgba(0,0,0,0.85)`;
+        sphereEl.innerHTML = "";
+        sphereEl.className = "w-20 h-20 celestial-sphere shrink-0";
+        sphereEl.style.background = "";
+        sphereEl.style.boxShadow = "";
+        sphereEl.style.border = "";
+
+        if (body.id === "sun") {
+          sphereEl.classList.add("sphere-sun");
+        } else {
+          if (body.hasRings) sphereEl.classList.add("sphere-saturn");
+          sphereEl.style.background = `radial-gradient(circle at 30% 30%, ${body.colorCore}, ${body.colorMid} 55%, ${body.colorEdge} 95%)`;
+          sphereEl.style.boxShadow = `0 0 24px ${body.glowColor}, inset -10px -10px 22px rgba(0,0,0,0.85)`;
+        }
       }
     }
   }
@@ -396,85 +410,58 @@ function initOrrery() {
   let accretionAngle = 0;
 
   function drawBlackHoleAnimated(bx, by, radius) {
-    // 1. Halo difuso de Lente Gravitacional exterior
-    const outerGlow = ctx.createRadialGradient(bx, by, radius * 0.8, bx, by, radius * 3.6);
-    outerGlow.addColorStop(0, "rgba(245, 158, 11, 0.75)");
-    outerGlow.addColorStop(0.35, "rgba(234, 88, 12, 0.35)");
-    outerGlow.addColorStop(0.7, "rgba(180, 83, 9, 0.12)");
+    // 1. Halo difuso plano concéntrico de energía exterior
+    const outerGlow = ctx.createRadialGradient(bx, by, radius * 1.0, bx, by, radius * 3.4);
+    outerGlow.addColorStop(0, "rgba(245, 158, 11, 0.65)");
+    outerGlow.addColorStop(0.35, "rgba(234, 88, 12, 0.28)");
+    outerGlow.addColorStop(0.7, "rgba(180, 83, 9, 0.1)");
     outerGlow.addColorStop(1, "rgba(0, 0, 0, 0)");
     ctx.fillStyle = outerGlow;
     ctx.beginPath();
-    ctx.arc(bx, by, radius * 3.6, 0, Math.PI * 2);
+    ctx.arc(bx, by, radius * 3.4, 0, Math.PI * 2);
     ctx.fill();
 
-    // 2. Arco Superior de Lente Gravitacional de Einstein (Luz del disco posterior curvada sobre la singularidad)
-    ctx.save();
-    ctx.translate(bx, by);
-    const upperLensingGrad = ctx.createLinearGradient(-radius * 2, 0, radius * 2, 0);
-    upperLensingGrad.addColorStop(0, "rgba(254, 240, 138, 0.95)"); // Doppler beaming (acercándose = más brillante)
-    upperLensingGrad.addColorStop(0.4, "rgba(245, 158, 11, 0.8)");
-    upperLensingGrad.addColorStop(1, "rgba(234, 88, 12, 0.25)");  // Alejándose = más tenue
-    ctx.strokeStyle = upperLensingGrad;
-    ctx.lineWidth = radius * 0.42;
-    ctx.beginPath();
-    ctx.ellipse(0, -radius * 0.22, radius * 1.55, radius * 1.35, -0.08, Math.PI * 0.95, Math.PI * 2.05);
-    ctx.stroke();
-    ctx.restore();
-
-    // 3. Arco Inferior de Lente Gravitacional (Luz curvada bajo la singularidad)
-    ctx.save();
-    ctx.translate(bx, by);
-    const lowerLensingGrad = ctx.createLinearGradient(-radius * 2, 0, radius * 2, 0);
-    lowerLensingGrad.addColorStop(0, "rgba(254, 240, 138, 0.75)");
-    lowerLensingGrad.addColorStop(0.45, "rgba(245, 158, 11, 0.55)");
-    lowerLensingGrad.addColorStop(1, "rgba(234, 88, 12, 0.15)");
-    ctx.strokeStyle = lowerLensingGrad;
-    ctx.lineWidth = radius * 0.28;
-    ctx.beginPath();
-    ctx.ellipse(0, radius * 0.18, radius * 1.45, radius * 0.85, -0.08, 0, Math.PI);
-    ctx.stroke();
-    ctx.restore();
-
-    // 4. Disco de Acreción Ecuatorial Posterior & Frontal con Doppler Beaming
-    ctx.save();
-    ctx.translate(bx, by);
-    ctx.rotate(-0.18);
-    ctx.scale(1, 0.32);
-
-    // Disco base
-    const diskGrad = ctx.createRadialGradient(0, 0, radius * 1.1, 0, 0, radius * 3.1);
-    diskGrad.addColorStop(0, "rgba(254, 240, 138, 0.98)");
-    diskGrad.addColorStop(0.28, "rgba(245, 158, 11, 0.88)");
-    diskGrad.addColorStop(0.65, "rgba(234, 88, 12, 0.55)");
+    // 2. Disco de acreción circular concéntrico plano en el contorno
+    const diskGrad = ctx.createRadialGradient(bx, by, radius * 1.05, bx, by, radius * 2.6);
+    diskGrad.addColorStop(0, "rgba(255, 255, 240, 0.98)");
+    diskGrad.addColorStop(0.18, "rgba(254, 240, 138, 0.92)");
+    diskGrad.addColorStop(0.48, "rgba(245, 158, 11, 0.78)");
+    diskGrad.addColorStop(0.82, "rgba(234, 88, 12, 0.35)");
     diskGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
     ctx.fillStyle = diskGrad;
     ctx.beginPath();
-    ctx.arc(0, 0, radius * 3.1, 0, Math.PI * 2);
+    ctx.arc(bx, by, radius * 2.6, 0, Math.PI * 2);
     ctx.fill();
 
-    // Asimetría Doppler relativista en el disco
-    const dopplerOverlay = ctx.createLinearGradient(-radius * 3.1, 0, radius * 3.1, 0);
-    dopplerOverlay.addColorStop(0, "rgba(255, 255, 255, 0.35)");
-    dopplerOverlay.addColorStop(0.5, "rgba(0, 0, 0, 0)");
-    dopplerOverlay.addColorStop(1, "rgba(0, 0, 0, 0.45)");
-    ctx.fillStyle = dopplerOverlay;
-    ctx.beginPath();
-    ctx.arc(0, 0, radius * 3.1, 0, Math.PI * 2);
-    ctx.fill();
+    // 3. Filamentos y bandas concéntricas de rotación orbital plana
+    accretionAngle += (timeMultiplier === 0 ? 0.005 : 0.015 * timeMultiplier);
+    ctx.save();
+    ctx.translate(bx, by);
+    ctx.rotate(accretionAngle);
+    for (let ring = 0; ring < 3; ring++) {
+      const ringR = radius * (1.3 + ring * 0.4);
+      ctx.strokeStyle = ring === 0 ? "rgba(254, 240, 138, 0.45)" : "rgba(245, 158, 11, 0.28)";
+      ctx.lineWidth = 1.2;
+      ctx.setLineDash([14 + ring * 6, 8 + ring * 4]);
+      ctx.beginPath();
+      ctx.arc(0, 0, ringR, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+    ctx.setLineDash([]);
     ctx.restore();
 
-    // 5. Partículas Relativistas de Plasma en Órbita
+    // 4. Partículas de plasma en órbita plana circular
     bhParticles.forEach(p => {
       p.angle += p.speed * (timeMultiplier === 0 ? 0.35 : Math.min(2.5, timeMultiplier));
       p.dist -= 0.12;
-      if (p.dist < radius * 1.05) {
+      if (p.dist < radius * 1.06) {
         p.dist = radius * 1.15 + Math.random() * 44;
       }
 
       const px = bx + Math.cos(p.angle) * p.dist;
-      const py = by + Math.sin(p.angle) * p.dist * 0.58;
+      const py = by + Math.sin(p.angle) * p.dist;
       const tx = bx + Math.cos(p.angle - 0.22) * (p.dist + 2);
-      const ty = by + Math.sin(p.angle - 0.22) * (p.dist + 2) * 0.58;
+      const ty = by + Math.sin(p.angle - 0.22) * (p.dist + 2);
 
       ctx.strokeStyle = `rgba(253, 224, 71, ${p.alpha})`;
       ctx.lineWidth = p.size;
@@ -484,19 +471,19 @@ function initOrrery() {
       ctx.stroke();
     });
 
-    // 6. Sombra Negra Absoluta del Horizonte de Sucesos (En primer plano sobre la luz trasera)
+    // 5. Círculo negro central del horizonte de sucesos (singularidad plana)
     ctx.fillStyle = "#000000";
     ctx.beginPath();
     ctx.arc(bx, by, radius, 0, Math.PI * 2);
     ctx.fill();
 
-    // 7. Esfera / Anillo de Fotones Relativista (Photon Ring ultra brillante y fino)
+    // 6. Anillo de fotones concéntrico plano en el perímetro
     ctx.strokeStyle = "rgba(254, 240, 138, 0.98)";
-    ctx.lineWidth = 1.8;
-    ctx.shadowColor = "rgba(251, 191, 36, 0.95)";
-    ctx.shadowBlur = 12;
+    ctx.lineWidth = 1.6;
+    ctx.shadowColor = "rgba(251, 191, 36, 0.9)";
+    ctx.shadowBlur = 8;
     ctx.beginPath();
-    ctx.arc(bx, by, radius + 0.8, 0, Math.PI * 2);
+    ctx.arc(bx, by, radius + 0.5, 0, Math.PI * 2);
     ctx.stroke();
     ctx.shadowBlur = 0; // Restaurar sombra para el resto del canvas
   }

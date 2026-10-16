@@ -202,18 +202,18 @@ body {
 }
 
 .sphere-blackhole {
-  background: #04060A url('../images/sgr-a.png') center center / 118% no-repeat;
+  background: transparent url('../images/sgr-a.png') center center / contain no-repeat;
   border-radius: 50%;
   position: relative;
-  box-shadow: 0 0 28px rgba(245, 158, 11, 0.65), 0 0 52px rgba(234, 88, 12, 0.35);
-  border: 1.5px solid rgba(254, 240, 138, 0.85);
-  animation: pulsePhotonRing 4s infinite ease-in-out;
+  border: none;
+  box-shadow: none;
+  filter: drop-shadow(0 0 18px rgba(245, 158, 11, 0.45));
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
 }
 
 .sphere-blackhole:hover {
-  transform: scale(1.06);
-  filter: brightness(1.12) contrast(1.08);
+  transform: scale(1.08);
+  filter: drop-shadow(0 0 26px rgba(251, 191, 36, 0.65)) brightness(1.1);
 }
 
 .sphere-saturn::after {

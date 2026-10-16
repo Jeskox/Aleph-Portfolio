@@ -228,56 +228,59 @@ function initGravitySandbox() {
     const coreRadius = isBH ? 21 : 18 + (centralMass / 4500) * 8;
 
     if (isBH) {
-      // Animación de Agujero Negro en el Sandbox
-      const glowGrad = ctx.createRadialGradient(cx, cy, coreRadius * 0.8, cx, cy, coreRadius * 3.4);
-      glowGrad.addColorStop(0, "rgba(245, 158, 11, 0.75)");
-      glowGrad.addColorStop(0.5, "rgba(234, 88, 12, 0.25)");
+      // 1. Halo difuso exterior plano
+      const glowGrad = ctx.createRadialGradient(cx, cy, coreRadius * 1.0, cx, cy, coreRadius * 3.2);
+      glowGrad.addColorStop(0, "rgba(245, 158, 11, 0.65)");
+      glowGrad.addColorStop(0.4, "rgba(234, 88, 12, 0.25)");
       glowGrad.addColorStop(1, "rgba(0,0,0,0)");
       ctx.fillStyle = glowGrad;
       ctx.beginPath();
-      ctx.arc(cx, cy, coreRadius * 3.4, 0, Math.PI * 2);
+      ctx.arc(cx, cy, coreRadius * 3.2, 0, Math.PI * 2);
       ctx.fill();
 
-      // Disco de acreción giratorio
-      ctx.save();
-      ctx.translate(cx, cy);
-      ctx.rotate(-0.25);
-      ctx.scale(1, 0.36);
-      const diskGrad = ctx.createRadialGradient(0, 0, coreRadius * 1.1, 0, 0, coreRadius * 2.8);
-      diskGrad.addColorStop(0, "#FEF08A");
-      diskGrad.addColorStop(0.4, "#F59E0B");
-      diskGrad.addColorStop(0.8, "rgba(234, 88, 12, 0.45)");
+      // 2. Disco de acreción circular concéntrico plano en el contorno
+      const diskGrad = ctx.createRadialGradient(cx, cy, coreRadius * 1.05, cx, cy, coreRadius * 2.6);
+      diskGrad.addColorStop(0, "rgba(255, 255, 240, 0.98)");
+      diskGrad.addColorStop(0.2, "#FEF08A");
+      diskGrad.addColorStop(0.5, "#F59E0B");
+      diskGrad.addColorStop(0.82, "rgba(234, 88, 12, 0.35)");
       diskGrad.addColorStop(1, "rgba(0,0,0,0)");
       ctx.fillStyle = diskGrad;
       ctx.beginPath();
-      ctx.arc(0, 0, coreRadius * 2.8, 0, Math.PI * 2);
+      ctx.arc(cx, cy, coreRadius * 2.6, 0, Math.PI * 2);
       ctx.fill();
-      ctx.restore();
 
-      // Anillo de lente gravitacional en rotación
+      // 3. Filamentos concéntricos planos en rotación orbital
       ctx.save();
       ctx.translate(cx, cy);
       ctx.rotate(spinTick);
-      ctx.strokeStyle = "rgba(253, 224, 71, 0.65)";
-      ctx.lineWidth = 2.2;
-      ctx.setLineDash([18, 10]);
-      ctx.beginPath();
-      ctx.arc(0, 0, coreRadius + 4, 0, Math.PI * 2);
-      ctx.stroke();
+      for (let rIdx = 0; rIdx < 2; rIdx++) {
+        const rad = coreRadius * (1.35 + rIdx * 0.5);
+        ctx.strokeStyle = rIdx === 0 ? "rgba(254, 240, 138, 0.45)" : "rgba(245, 158, 11, 0.25)";
+        ctx.lineWidth = 1.4;
+        ctx.setLineDash([14, 8]);
+        ctx.beginPath();
+        ctx.arc(0, 0, rad, 0, Math.PI * 2);
+        ctx.stroke();
+      }
       ctx.setLineDash([]);
       ctx.restore();
 
-      // Horizonte de sucesos negro puro
+      // 4. Círculo negro central del horizonte de sucesos
       ctx.fillStyle = "#000000";
       ctx.beginPath();
       ctx.arc(cx, cy, coreRadius, 0, Math.PI * 2);
       ctx.fill();
 
+      // 5. Anillo de fotones concéntrico plano en el perímetro
       ctx.strokeStyle = "#FEF08A";
-      ctx.lineWidth = 1.5;
+      ctx.lineWidth = 1.6;
+      ctx.shadowColor = "rgba(251, 191, 36, 0.85)";
+      ctx.shadowBlur = 8;
       ctx.beginPath();
-      ctx.arc(cx, cy, coreRadius + 0.8, 0, Math.PI * 2);
+      ctx.arc(cx, cy, coreRadius + 0.5, 0, Math.PI * 2);
       ctx.stroke();
+      ctx.shadowBlur = 0;
     } else {
       const glowGrad = ctx.createRadialGradient(cx, cy, coreRadius * 0.4, cx, cy, coreRadius * 3);
       glowGrad.addColorStop(0, "rgba(254, 240, 138, 0.85)");
