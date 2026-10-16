@@ -396,17 +396,74 @@ function initOrrery() {
   let accretionAngle = 0;
 
   function drawBlackHoleAnimated(bx, by, radius) {
-    // 1. Halo de Lente Gravitacional exterior
-    const outerGlow = ctx.createRadialGradient(bx, by, radius * 0.8, bx, by, radius * 3.4);
-    outerGlow.addColorStop(0, "rgba(245, 158, 11, 0.7)");
-    outerGlow.addColorStop(0.45, "rgba(234, 88, 12, 0.28)");
+    // 1. Halo difuso de Lente Gravitacional exterior
+    const outerGlow = ctx.createRadialGradient(bx, by, radius * 0.8, bx, by, radius * 3.6);
+    outerGlow.addColorStop(0, "rgba(245, 158, 11, 0.75)");
+    outerGlow.addColorStop(0.35, "rgba(234, 88, 12, 0.35)");
+    outerGlow.addColorStop(0.7, "rgba(180, 83, 9, 0.12)");
     outerGlow.addColorStop(1, "rgba(0, 0, 0, 0)");
     ctx.fillStyle = outerGlow;
     ctx.beginPath();
-    ctx.arc(bx, by, radius * 3.4, 0, Math.PI * 2);
+    ctx.arc(bx, by, radius * 3.6, 0, Math.PI * 2);
     ctx.fill();
 
-    // 2. Vórtice de Partículas Relativistas cayendo en espiral
+    // 2. Arco Superior de Lente Gravitacional de Einstein (Luz del disco posterior curvada sobre la singularidad)
+    ctx.save();
+    ctx.translate(bx, by);
+    const upperLensingGrad = ctx.createLinearGradient(-radius * 2, 0, radius * 2, 0);
+    upperLensingGrad.addColorStop(0, "rgba(254, 240, 138, 0.95)"); // Doppler beaming (acercándose = más brillante)
+    upperLensingGrad.addColorStop(0.4, "rgba(245, 158, 11, 0.8)");
+    upperLensingGrad.addColorStop(1, "rgba(234, 88, 12, 0.25)");  // Alejándose = más tenue
+    ctx.strokeStyle = upperLensingGrad;
+    ctx.lineWidth = radius * 0.42;
+    ctx.beginPath();
+    ctx.ellipse(0, -radius * 0.22, radius * 1.55, radius * 1.35, -0.08, Math.PI * 0.95, Math.PI * 2.05);
+    ctx.stroke();
+    ctx.restore();
+
+    // 3. Arco Inferior de Lente Gravitacional (Luz curvada bajo la singularidad)
+    ctx.save();
+    ctx.translate(bx, by);
+    const lowerLensingGrad = ctx.createLinearGradient(-radius * 2, 0, radius * 2, 0);
+    lowerLensingGrad.addColorStop(0, "rgba(254, 240, 138, 0.75)");
+    lowerLensingGrad.addColorStop(0.45, "rgba(245, 158, 11, 0.55)");
+    lowerLensingGrad.addColorStop(1, "rgba(234, 88, 12, 0.15)");
+    ctx.strokeStyle = lowerLensingGrad;
+    ctx.lineWidth = radius * 0.28;
+    ctx.beginPath();
+    ctx.ellipse(0, radius * 0.18, radius * 1.45, radius * 0.85, -0.08, 0, Math.PI);
+    ctx.stroke();
+    ctx.restore();
+
+    // 4. Disco de Acreción Ecuatorial Posterior & Frontal con Doppler Beaming
+    ctx.save();
+    ctx.translate(bx, by);
+    ctx.rotate(-0.18);
+    ctx.scale(1, 0.32);
+
+    // Disco base
+    const diskGrad = ctx.createRadialGradient(0, 0, radius * 1.1, 0, 0, radius * 3.1);
+    diskGrad.addColorStop(0, "rgba(254, 240, 138, 0.98)");
+    diskGrad.addColorStop(0.28, "rgba(245, 158, 11, 0.88)");
+    diskGrad.addColorStop(0.65, "rgba(234, 88, 12, 0.55)");
+    diskGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
+    ctx.fillStyle = diskGrad;
+    ctx.beginPath();
+    ctx.arc(0, 0, radius * 3.1, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Asimetría Doppler relativista en el disco
+    const dopplerOverlay = ctx.createLinearGradient(-radius * 3.1, 0, radius * 3.1, 0);
+    dopplerOverlay.addColorStop(0, "rgba(255, 255, 255, 0.35)");
+    dopplerOverlay.addColorStop(0.5, "rgba(0, 0, 0, 0)");
+    dopplerOverlay.addColorStop(1, "rgba(0, 0, 0, 0.45)");
+    ctx.fillStyle = dopplerOverlay;
+    ctx.beginPath();
+    ctx.arc(0, 0, radius * 3.1, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    // 5. Partículas Relativistas de Plasma en Órbita
     bhParticles.forEach(p => {
       p.angle += p.speed * (timeMultiplier === 0 ? 0.35 : Math.min(2.5, timeMultiplier));
       p.dist -= 0.12;
@@ -415,7 +472,7 @@ function initOrrery() {
       }
 
       const px = bx + Math.cos(p.angle) * p.dist;
-      const py = by + Math.sin(p.angle) * p.dist * 0.58; // Proyección inclinada del disco
+      const py = by + Math.sin(p.angle) * p.dist * 0.58;
       const tx = bx + Math.cos(p.angle - 0.22) * (p.dist + 2);
       const ty = by + Math.sin(p.angle - 0.22) * (p.dist + 2) * 0.58;
 
@@ -427,44 +484,21 @@ function initOrrery() {
       ctx.stroke();
     });
 
-    // 3. Arco de Luz Curvado por Lente Gravitacional (Superior e Inferior)
-    ctx.save();
-    ctx.translate(bx, by);
-    ctx.rotate(accretionAngle * 0.4);
-    ctx.strokeStyle = "rgba(251, 191, 36, 0.55)";
-    ctx.lineWidth = 3.5;
-    ctx.beginPath();
-    ctx.arc(0, 0, radius * 1.32, 0, Math.PI * 2);
-    ctx.stroke();
-    ctx.restore();
-
-    // 4. Disco de Acreción Ecuatorial Inclinado (Efecto Gargantúa)
-    ctx.save();
-    ctx.translate(bx, by);
-    ctx.rotate(-0.22);
-    ctx.scale(1, 0.36);
-    const diskGrad = ctx.createRadialGradient(0, 0, radius * 1.05, 0, 0, radius * 2.75);
-    diskGrad.addColorStop(0, "#FEF08A");
-    diskGrad.addColorStop(0.35, "#F59E0B");
-    diskGrad.addColorStop(0.7, "rgba(234, 88, 12, 0.65)");
-    diskGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
-    ctx.fillStyle = diskGrad;
-    ctx.beginPath();
-    ctx.arc(0, 0, radius * 2.75, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.restore();
-
-    // 5. Sombra del Horizonte de Sucesos + Anillo de Fotones
+    // 6. Sombra Negra Absoluta del Horizonte de Sucesos (En primer plano sobre la luz trasera)
     ctx.fillStyle = "#000000";
     ctx.beginPath();
     ctx.arc(bx, by, radius, 0, Math.PI * 2);
     ctx.fill();
 
-    ctx.strokeStyle = "#FEF08A";
+    // 7. Esfera / Anillo de Fotones Relativista (Photon Ring ultra brillante y fino)
+    ctx.strokeStyle = "rgba(254, 240, 138, 0.98)";
     ctx.lineWidth = 1.8;
+    ctx.shadowColor = "rgba(251, 191, 36, 0.95)";
+    ctx.shadowBlur = 12;
     ctx.beginPath();
-    ctx.arc(bx, by, radius + 1, 0, Math.PI * 2);
+    ctx.arc(bx, by, radius + 0.8, 0, Math.PI * 2);
     ctx.stroke();
+    ctx.shadowBlur = 0; // Restaurar sombra para el resto del canvas
   }
 
   function draw() {

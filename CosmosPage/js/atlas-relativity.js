@@ -116,7 +116,8 @@ const ATLAS_OBJECTS = [
     hasLiveBlackHole: true,
     distance: "53,5 millones de años luz",
     constellation: "Virgo",
-    image: "https://upload.wikimedia.org/wikipedia/commons/4/4f/Black_hole_-_Messier_87_crop_max_res.jpg",
+    image: "images/m87-blackhole.jpg",
+    fallbackImage: "https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?auto=format&fit=crop&w=1000&q=85",
     summary: "M87* es el agujero negro supermasivo situado en el núcleo de la galaxia elíptica supergigante Messier 87. Con una masa estimada en 6.500 millones de masas solares, fue el primer agujero negro cuya sombra y anillo de acreción fueron resueltos directamente en abril de 2019 por la colaboración internacional Event Horizon Telescope (EHT) mediante interferometría de muy larga base.",
     fullArticle: "En el centro de la galaxia Messier 87 reside uno de los objetos más masivos del universo local. Su horizonte de sucesos posee un diámetro aproximado de 38.000 millones de kilómetros —más de tres veces la distancia media entre el Sol y Plutón—. La asimetría en el brillo de su anillo de fotones se debe al efecto Doppler relativista: el plasma magnetizado que gira acercándose al observador a velocidades cercanas a la de la luz aparenta ser notablemente más luminoso que el que se aleja. Desde sus polos emerge un chorro astrofísico de partículas relativistas que se extiende a lo largo de más de 4.900 años luz.",
     specs: {
@@ -133,7 +134,8 @@ const ATLAS_OBJECTS = [
     categoryLabel: "Región H II de formación estelar",
     distance: "6.500 – 7.000 años luz",
     constellation: "Serpens",
-    image: "https://upload.wikimedia.org/wikipedia/commons/6/68/Pillars_of_creation_2014_HST_WFC3-UVIS_full-res_denoised.jpg",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Pillars_of_creation_2014_HST_WFC3-UVIS_full-res_denoised.jpg/1024px-Pillars_of_creation_2014_HST_WFC3-UVIS_full-res_denoised.jpg",
+    fallbackImage: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1000&q=85",
     summary: "Los Pilares de la Creación son trompas de gas interestelar y polvo cósmico situadas en el interior de la Nebulosa del Águila. Reciben este nombre porque el hidrógeno molecular frío y denso de sus columnas se encuentra en pleno proceso de colapso gravitacional para formar nuevas estrellas jóvenes, al tiempo que es erosionado por la radiación ultravioleta de estrellas masivas cercanas.",
     fullArticle: "Fotografiadas originalmente por el Telescopio Espacial Hubble en 1995 y reobservadas en alta resolución tanto en el espectro visible como en el infrarrojo cercano por el Telescopio Espacial James Webb (JWST), estas estructuras se extienden a lo largo de entre 4 y 5 años luz. En los bordes superiores de las columnas destacan glóbulos gaseosos en evaporación (EGGs), regiones de mayor densidad donde protoestrellas embrionarias continúan acumulando masa antes de que el viento estelar disipe la nube circundante.",
     specs: {
@@ -150,7 +152,8 @@ const ATLAS_OBJECTS = [
     categoryLabel: "Gran nebulosa de emisión",
     distance: "7.600 años luz",
     constellation: "Carina",
-    image: "https://upload.wikimedia.org/wikipedia/commons/1/1f/Carina_Nebula_by_JWST.jpg",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Carina_Nebula_by_JWST.jpg/1024px-Carina_Nebula_by_JWST.jpg",
+    fallbackImage: "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=1000&q=85",
     summary: "La Nebulosa de la Quilla es una extensa región de gas ionizado que envuelve varios cúmulos abiertos de estrellas de tipo O y el sistema hipergigante Eta Carinae. En su borde noroccidental se ubica NGC 3324, cuya muralla de polvo erosionada por vientos estelares es conocida como los Acantilados Cósmicos.",
     fullArticle: "Con un diámetro superior a los 300 años luz, NGC 3372 es una de las nebulosas difusas más grandes del cielo austral, cuatro veces más extensa y aún más brillante que la célebre Nebulosa de Orión. Las observaciones infrarrojas del telescopio James Webb revelaron decenas de chorros bipolares procedentes de estrellas recién nacidas que antes permanecían ocultas tras las densas cortinas de polvo de silicatos e hidrocarburos aromáticos policíclicos.",
     specs: {
@@ -167,7 +170,8 @@ const ATLAS_OBJECTS = [
     categoryLabel: "Nebulosa planetaria",
     distance: "2.000 años luz",
     constellation: "Vela",
-    image: "https://upload.wikimedia.org/wikipedia/commons/0/07/Southern_Ring_Nebula_by_JWST.jpg",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Southern_Ring_Nebula_by_JWST.jpg/1024px-Southern_Ring_Nebula_by_JWST.jpg",
+    fallbackImage: "https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?auto=format&fit=crop&w=1000&q=85",
     summary: "NGC 3132 es una nebulosa planetaria brillante originada por las capas exteriores de gas expulsadas por una estrella moribunda evolucionada hacia la fase de enana blanca. Sus anillos concéntricos registran episodios sucesivos de pérdida de masa ocurridos durante los últimos miles de años.",
     fullArticle: "En el centro geométrico de la cavidad nebular se distingue un sistema estelar binario: una estrella brillante de tipo A que aún permanece en la secuencia principal y su compañera, una tenue pero extremadamente caliente enana blanca (~100.000 K) que es la verdadera progenitora de la nebulosa. La radiación ultravioleta de esta enana blanca ioniza el gas circundante haciendo que resplandezca, mientras que el movimiento orbital del par estelar esculpe las asimetrías helicoidales del gas.",
     specs: {
@@ -184,7 +188,8 @@ const ATLAS_OBJECTS = [
     categoryLabel: "Gigante gaseoso anillado",
     distance: "1.433 millones de km (9,58 UA)",
     constellation: "Eclíptica",
-    image: "https://upload.wikimedia.org/wikipedia/commons/c/c7/Saturn_during_Equinox.jpg",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Saturn_during_Equinox.jpg/1024px-Saturn_during_Equinox.jpg",
+    fallbackImage: "https://images.unsplash.com/photo-1614732414444-096e5f1122d5?auto=format&fit=crop&w=1000&q=85",
     summary: "Saturno es el segundo planeta en tamaño y masa del Sistema Solar y el único cuyo sistema de anillos es claramente visible desde la Tierra con instrumentación óptica modesta. Sus anillos principales (A, B y C) presentan un espesor medio de apenas 10 a 30 metros pese a extenderse a lo largo de más de 280.000 kilómetros de diámetro.",
     fullArticle: "Estudiado en detalle durante trece años por la sonda orbital Cassini-Huygens, el sistema de Saturno funciona como un laboratorio natural de dinámica de discos. Las divisiones dentro de sus anillos —como la división de Cassini y la división de Encke— son mantenidas por resonancias gravitacionales y por el paso de pequeñas lunas pastoras. En su polo norte alberga una corriente en chorro atmosférica con una singular geometría hexagonal estable de unos 30.000 km de diámetro.",
     specs: {
@@ -201,7 +206,8 @@ const ATLAS_OBJECTS = [
     categoryLabel: "Satélite helado con océano interno",
     distance: "628,3 millones de km (media)",
     constellation: "Sistema Joviano",
-    image: "https://upload.wikimedia.org/wikipedia/commons/5/54/Europa-moon.jpg",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Europa-moon.jpg/1024px-Europa-moon.jpg",
+    fallbackImage: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&w=1000&q=85",
     summary: "Descubierta en 1610 por Galileo Galilei, Europa es el menor de los cuatro satélites galileanos de Júpiter. Presenta la superficie sólida más lisa de todo el Sistema Solar, recorrida por largas fracturas rojizas denominadas lineae y prácticamente desprovista de cráteres de impacto de gran tamaño.",
     fullArticle: "La juventud geológica de su corteza helada y las mediciones magnéticas inducidas obtenidas por la sonda Galileo confirman la presencia de un océano global de agua líquida salada de unos 100 km de profundidad bajo una capa de hielo de entre 15 y 25 km de espesor. El calor necesario para mantener líquido este océano —lejos de la zona habitable solar— proviene de la disipación por marea provocada por la resonancia orbital de Laplace que mantiene con Ío y Ganímedes.",
     specs: {
@@ -234,15 +240,25 @@ function initScaleAndRelativity() {
     if (sphereA) {
       sphereA.style.width = `${sizeAPx}px`;
       sphereA.style.height = `${sizeAPx}px`;
-      sphereA.style.background = bodyA.colorGrad;
-      sphereA.style.boxShadow = `0 0 26px ${bodyA.glow}, inset -8px -8px 18px rgba(0,0,0,0.85)`;
+      if (bodyA.isBlackHole) {
+        sphereA.style.background = "url('images/blackhole-lensing.jpg') center/cover no-repeat";
+        sphereA.style.boxShadow = `0 0 28px rgba(245, 158, 11, 0.75), inset 0 0 10px rgba(0,0,0,0.9)`;
+      } else {
+        sphereA.style.background = bodyA.colorGrad;
+        sphereA.style.boxShadow = `0 0 26px ${bodyA.glow}, inset -8px -8px 18px rgba(0,0,0,0.85)`;
+      }
     }
 
     if (sphereB) {
       sphereB.style.width = `${sizeBPx}px`;
       sphereB.style.height = `${sizeBPx}px`;
-      sphereB.style.background = bodyB.colorGrad;
-      sphereB.style.boxShadow = `0 0 26px ${bodyB.glow}, inset -8px -8px 18px rgba(0,0,0,0.85)`;
+      if (bodyB.isBlackHole) {
+        sphereB.style.background = "url('images/blackhole-lensing.jpg') center/cover no-repeat";
+        sphereB.style.boxShadow = `0 0 28px rgba(245, 158, 11, 0.75), inset 0 0 10px rgba(0,0,0,0.9)`;
+      } else {
+        sphereB.style.background = bodyB.colorGrad;
+        sphereB.style.boxShadow = `0 0 26px ${bodyB.glow}, inset -8px -8px 18px rgba(0,0,0,0.85)`;
+      }
     }
 
     document.getElementById("scale-name-a").textContent = bodyA.name;
@@ -338,23 +354,23 @@ function initCosmicAtlas() {
       const card = document.createElement("article");
       card.className = "hud-card rounded-2xl overflow-hidden flex flex-col justify-between";
 
-      // Si es un Agujero Negro, incluimos tanto la fotografía real del EHT como el halo relativista animado
+      // Si es un Agujero Negro, incluimos la visualización fotorrealista de lente gravitacional
       const visualHeader = obj.hasLiveBlackHole
         ? `
-          <div class="relative h-56 overflow-hidden bh-live-container">
+          <div class="relative h-56 overflow-hidden bh-live-container group">
             <img 
               src="${obj.image}" 
               alt="${obj.name}" 
-              class="absolute inset-0 w-full h-full object-cover opacity-45 mix-blend-screen transition-transform duration-700 hover:scale-105"
+              class="bh-realistic-img"
               loading="lazy"
+              onerror="if(this.dataset.fallback){this.src=this.dataset.fallback;this.removeAttribute('data-fallback');}"
+              data-fallback="${obj.fallbackImage || ''}"
             />
-            <div class="bh-lensing-halo"></div>
-            <div class="bh-accretion-disk"></div>
-            <div class="bh-event-horizon"></div>
+            <div class="bh-cinematic-glow"></div>
             <div class="absolute inset-0 bg-gradient-to-t from-[#0B0F19] via-transparent to-transparent"></div>
             <div class="absolute top-3 left-3 z-10">
-              <span class="px-2.5 py-1 rounded-md text-[10px] font-mono-tech uppercase tracking-wider bg-black/80 text-amber-400 border border-amber-500/30 backdrop-blur-md">
-                ${obj.categoryLabel} // Simulación Activa
+              <span class="px-2.5 py-1 rounded-md text-[10px] font-mono-tech uppercase tracking-wider bg-black/85 text-amber-400 border border-amber-500/35 backdrop-blur-md">
+                ${obj.categoryLabel} // Simulación Relativista EHT
               </span>
             </div>
             <div class="absolute bottom-3 left-4 right-4 z-10 flex items-center justify-between text-[11px] font-mono-tech text-slate-300">
@@ -364,12 +380,14 @@ function initCosmicAtlas() {
           </div>
         `
         : `
-          <div class="relative h-56 overflow-hidden bg-slate-950">
+          <div class="relative h-56 overflow-hidden bg-slate-950 group">
             <img 
               src="${obj.image}" 
               alt="${obj.name}" 
-              class="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               loading="lazy"
+              onerror="if(this.dataset.fallback){this.src=this.dataset.fallback;this.removeAttribute('data-fallback');}"
+              data-fallback="${obj.fallbackImage || ''}"
             />
             <div class="absolute inset-0 bg-gradient-to-t from-[#0B0F19] via-transparent to-transparent"></div>
             <div class="absolute top-3 left-3">
@@ -448,7 +466,13 @@ function openAtlasModal(objectId) {
   body.innerHTML = `
     <div class="space-y-6">
       <div class="relative h-64 sm:h-80 rounded-2xl overflow-hidden border border-white/10 bg-black">
-        <img src="${obj.image}" alt="${obj.name}" class="w-full h-full object-cover">
+        <img 
+          src="${obj.image}" 
+          alt="${obj.name}" 
+          class="w-full h-full object-cover"
+          onerror="if(this.dataset.fallback){this.src=this.dataset.fallback;this.removeAttribute('data-fallback');}"
+          data-fallback="${obj.fallbackImage || ''}"
+        />
         <div class="absolute inset-0 bg-gradient-to-t from-[#080C14] via-transparent to-transparent"></div>
         <div class="absolute bottom-4 left-5 right-5">
           <span class="text-[11px] font-mono-tech uppercase tracking-wider text-amber-400 block mb-1">

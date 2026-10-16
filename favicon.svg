@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="alephGrad" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0284C7"/>
+      <stop offset="50%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#C87D55"/>
+    </linearGradient>
+    <radialGradient id="alephGlow" cx="32" cy="32" r="30" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#0F172A" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  
+  <!-- Base circular dark background -->
+  <rect width="64" height="64" rx="16" fill="#0B0F19"/>
+  <rect x="1" y="1" width="62" height="62" rx="15" stroke="url(#alephGrad)" stroke-width="1.5" stroke-opacity="0.6"/>
+  <circle cx="32" cy="32" r="24" fill="url(#alephGlow)"/>
+  
+  <!-- Aleph Monogram / Trinity Geometric Nexus -->
+  <path d="M20 44L44 20" stroke="url(#alephGrad)" stroke-width="3.5" stroke-linecap="round"/>
+  <path d="M22 23C27 23 31 27 31 32" stroke="#38BDF8" stroke-width="3" stroke-linecap="round"/>
+  <path d="M42 41C37 41 33 37 33 32" stroke="#F59E0B" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="32" cy="32" r="2.5" fill="#FFFFFF"/>
+</svg>

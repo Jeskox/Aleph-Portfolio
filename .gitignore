@@ -1,0 +1,14 @@
+# OS metadata
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor & IDE artifacts
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node modules / logs (if ever added)
+node_modules/
+npm-debug.log*

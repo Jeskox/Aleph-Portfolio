@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ecosystem By Aleph — Digital Experiences &amp; Curated Showcase</title>
+  <meta name="description" content="Ecosystem By Aleph: Three interactive digital universes. Specialty Coffee, High-End Real Estate, and Astrophysical Keplerian Simulation.">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,600;1,700&family=IBM+Plex+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            canvas: '#070A11',
+            surface: '#0D1322',
+            surfaceBorder: 'rgba(255, 255, 255, 0.08)',
+            coffeeAccent: '#C87D55',
+            azureAccent: '#0284C7',
+            cosmosAmber: '#F59E0B'
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            display: ['"Space Grotesk"', 'sans-serif'],
+            mono: ['"IBM Plex Mono"', 'monospace'],
+            serif: ['"Cormorant Garamond"', 'serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #070A11;
+      color: #E2E8F0;
+      background-image: 
+        radial-gradient(at 10% 15%, rgba(2, 132, 199, 0.12) 0px, transparent 50%),
+        radial-gradient(at 90% 20%, rgba(245, 158, 11, 0.09) 0px, transparent 50%),
+        radial-gradient(at 50% 85%, rgba(200, 125, 85, 0.1) 0px, transparent 60%);
+      background-attachment: fixed;
+    }
+
+    .glass-card {
+      background: rgba(13, 19, 34, 0.72);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .glass-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(255, 255, 255, 0.22);
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+    }
+
+    .badge-pill {
+      letter-spacing: 0.06em;
+      font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-white selection:text-black">
+
+  <!-- Top Navigation Bar -->
+  <header class="w-full border-b border-white/10 backdrop-blur-md sticky top-0 z-50 bg-[#070A11]/85">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-azureAccent via-cosmosAmber to-coffeeAccent p-[1px] shadow-lg shadow-sky-500/10">
+          <div class="w-full h-full bg-[#0B0F19] rounded-[11px] flex items-center justify-center">
+            <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+        </div>
+        <div>
+          <span class="text-xs font-mono tracking-wider text-slate-400 uppercase block">Digital Portfolio</span>
+          <span class="text-base font-bold tracking-tight text-white flex items-center gap-1.5">
+            Ecosystem <span class="font-serif italic font-normal text-slate-300">By Aleph</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span>Deploy Status: Live</span>
+        </div>
+
+        <a 
+          href="https://github.com/Jeskox/Aleph-Portfolio" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/15 text-xs font-medium text-slate-200 transition-colors"
+        >
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+          </svg>
+          <span class="hidden md:inline">GitHub Repo</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 flex-grow flex flex-col justify-center">
+    
+    <div class="text-center max-w-3xl mx-auto mb-14 md:mb-20">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-mono uppercase tracking-wider text-slate-300 mb-6">
+        <span class="w-1.5 h-1.5 rounded-full bg-sky-400"></span>
+        <span>Interactive Showcase // 3 Projects</span>
+      </div>
+
+      <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight font-display text-white leading-tight">
+        Ecosystem <span class="font-serif italic font-normal text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-amber-300 to-orange-400">By Aleph</span>
+      </h1>
+
+      <p class="mt-5 text-base sm:text-lg text-slate-300 leading-relaxed font-sans font-light">
+        Three distinct universes, una misma obsesión por el detalle. Bienvenido al <span class="text-white font-medium">digital showroom</span> donde conviven el café de especialidad artesanal, la arquitectura residencial de alta gama y la astrofísica relativista interactiva.
+      </p>
+
+      <div class="mt-6 flex items-center justify-center gap-4 text-xs font-mono text-slate-400">
+        <span>100% Vanilla JS &amp; Modern Web</span>
+        <span>·</span>
+        <span>Continuous Deploy on GitHub Pages</span>
+      </div>
+    </div>
+
+    <!-- Cards Grid: The 3 Experiences -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+
+      <!-- PROJECT 01: ORIGEN COFFEE -->
+      <article class="glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between group hover:border-[#C87D55]/50">
+        <div>
+          <!-- Header Card -->
+          <div class="flex items-center justify-between gap-4 mb-6">
+            <div class="w-12 h-12 rounded-2xl bg-[#C87D55]/15 border border-[#C87D55]/30 flex items-center justify-center text-[#E29578] group-hover:scale-105 transition-transform">
+              <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
+                <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
+                <line x1="6" y1="1" x2="6" y2="4"/>
+                <line x1="10" y1="1" x2="10" y2="4"/>
+                <line x1="14" y1="1" x2="14" y2="4"/>
+              </svg>
+            </div>
+            <span class="px-3 py-1 rounded-full text-[11px] font-mono uppercase tracking-wider bg-[#C87D55]/15 text-[#E29578] border border-[#C87D55]/30">
+              E-Commerce &amp; Craft
+            </span>
+          </div>
+
+          <h2 class="text-2xl font-bold font-display text-white tracking-wide group-hover:text-[#E29578] transition-colors">
+            ORIGEN Coffee
+          </h2>
+
+          <p class="text-xs sm:text-sm text-slate-300 mt-3 leading-relaxed">
+            Un viaje sensorial desde la finca hasta la taza. Experiencia e-commerce de café de especialidad con notas de cata, guías de brewing interactivas, selector de molienda y checkout intuitivo.
+          </p>
+
+          <!-- Feature Pills -->
+          <div class="flex flex-wrap gap-2 mt-5 text-[11px] font-mono text-slate-400">
+            <span class="px-2.5 py-1 rounded-md bg-white/5 border border-white/10">Brewing Guides</span>
+            <span class="px-2.5 py-1 rounded-md bg-white/5 border border-white/10">Interactive Cart</span>
+            <span class="px-2.5 py-1 rounded-md bg-white/5 border border-white/10">Sensory Notes</span>
+          </div>
+        </div>
+
+        <div class="pt-8 mt-8 border-t border-white/10">
+          <a 
+            href="CoffeePage/" 
+            class="w-full inline-flex items-center justify-between px-5 py-3.5 rounded-xl bg-gradient-to-r from-[#C87D55] to-[#B26B45] text-white text-sm font-semibold tracking-wide shadow-lg shadow-[#C87D55]/20 hover:brightness-110 active:scale-[0.99] transition-all"
+          >
+            <span>Launch Coffee Experience</span>
+            <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- PROJECT 02: NEXO REAL ESTATE -->
+      <article class="glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between group hover:border-[#0284C7]/50">
+        <div>
+          <!-- Header Card -->
+          <div class="flex items-center justify-between gap-4 mb-6">
+            <div class="w-12 h-12 rounded-2xl bg-[#0284C7]/15 border border-[#0284C7]/30 flex items-center justify-center text-[#38BDF8] group-hover:scale-105 transition-transform">
+              <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                <polyline points="9 22 9 12 15 12 15 22"/>
+              </svg>
+            </div>
+            <span class="px-3 py-1 rounded-full text-[11px] font-mono uppercase tracking-wider bg-[#0284C7]/15 text-[#38BDF8] border border-[#0284C7]/30">
+              Real Estate &amp; Concierge
+            </span>
+          </div>
+
+          <h2 class="text-2xl font-bold font-display text-white tracking-wide group-hover:text-[#38BDF8] transition-colors">
+            NEXO Real Estate
+          </h2>
+
+          <p class="text-xs sm:text-sm text-slate-300 mt-3 leading-relaxed">
+            Portal inmobiliario premium para propiedades residenciales singulares. Incluye comparador interactivo Antes/Después de Home Staging, simulador de hipoteca y asistente virtual NEXO Concierge.
+          </p>
+
+          <!-- Feature Pills -->
+          <div class="flex flex-wrap gap-2 mt-5 text-[11px] font-mono text-slate-400">
+            <span class="px-2.5 py-1 rounded-md bg-white/5 border border-white/10">Home Staging Slider</span>
+            <span class="px-2.5 py-1 rounded-md bg-white/5 border border-white/10">NEXO Concierge</span>
+            <span class="px-2.5 py-1 rounded-md bg-white/5 border border-white/10">Mortgage Calc</span>
+          </div>
+        </div>
+
+        <div class="pt-8 mt-8 border-t border-white/10">
+          <a 
+            href="NexoRealState/" 
+            class="w-full inline-flex items-center justify-between px-5 py-3.5 rounded-xl bg-gradient-to-r from-[#0284C7] to-[#0369A1] text-white text-sm font-semibold tracking-wide shadow-lg shadow-[#0284C7]/20 hover:brightness-110 active:scale-[0.99] transition-all"
+          >
+            <span>Launch Real Estate Portal</span>
+            <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- PROJECT 03: COSMOS OBSERVATORY -->
+      <article class="glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between group hover:border-[#F59E0B]/50">
+        <div>
+          <!-- Header Card -->
+          <div class="flex items-center justify-between gap-4 mb-6">
+            <div class="w-12 h-12 rounded-2xl bg-[#F59E0B]/15 border border-[#F59E0B]/30 flex items-center justify-center text-[#FBBF24] group-hover:scale-105 transition-transform">
+              <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="7"/>
+                <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(-20 12 12)"/>
+              </svg>
+            </div>
+            <span class="px-3 py-1 rounded-full text-[11px] font-mono uppercase tracking-wider bg-[#F59E0B]/15 text-[#FBBF24] border border-[#F59E0B]/30">
+              Astrophysics &amp; Orbits
+            </span>
+          </div>
+
+          <h2 class="text-2xl font-bold font-display text-white tracking-wide group-hover:text-[#FBBF24] transition-colors">
+            COSMOS By Aleph
+          </h2>
+
+          <p class="text-xs sm:text-sm text-slate-300 mt-3 leading-relaxed">
+            Observatorio astrofísico digital y simulador kepleriano. Representa en tiempo real la dinámica orbital y la lente gravitacional de Sagitario A*, con enciclopedia de espacio profundo y comparador relativista.
+          </p>
+
+          <!-- Feature Pills -->
+          <div class="flex flex-wrap gap-2 mt-5 text-[11px] font-mono text-slate-400">
+            <span class="px-2.5 py-1 rounded-md bg-white/5 border border-white/10">Keplerian Engine</span>
+            <span class="px-2.5 py-1 rounded-md bg-white/5 border border-white/10">Einstein Lensing</span>
+            <span class="px-2.5 py-1 rounded-md bg-white/5 border border-white/10">Cosmic Atlas</span>
+          </div>
+        </div>
+
+        <div class="pt-8 mt-8 border-t border-white/10">
+          <a 
+            href="CosmosPage/" 
+            class="w-full inline-flex items-center justify-between px-5 py-3.5 rounded-xl bg-gradient-to-r from-[#D97706] to-[#B45309] text-white text-sm font-semibold tracking-wide shadow-lg shadow-[#F59E0B]/20 hover:brightness-110 active:scale-[0.99] transition-all"
+          >
+            <span>Launch Cosmos Observatory</span>
+            <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+      </article>
+
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="w-full border-t border-white/10 py-8 bg-[#04060A]/80 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-400">
+      <div class="flex items-center gap-2">
+        <span>Designed &amp; Engineered with precision</span>
+        <span class="font-serif italic text-base text-slate-200">By Aleph</span>
+        <span>· 2026</span>
+      </div>
+
+      <div class="flex items-center gap-4 text-slate-400">
+        <a href="CoffeePage/" class="hover:text-white transition-colors">Origen</a>
+        <span>·</span>
+        <a href="NexoRealState/" class="hover:text-white transition-colors">Nexo</a>
+        <span>·</span>
+        <a href="CosmosPage/" class="hover:text-white transition-colors">Cosmos</a>
+        <span>·</span>
+        <a href="https://github.com/Jeskox/Aleph-Portfolio" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors flex items-center gap-1">
+          <span>GitHub</span>
+          <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
