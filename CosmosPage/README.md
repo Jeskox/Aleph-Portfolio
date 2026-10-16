@@ -1,7 +1,7 @@
 # COSMOS Explorer — Deep Space Observatory & Astrophysics OS
 
 > **Proyecto 03 / 03 — Portafolio RandomPages**  
-> Interfaz web empresarial/científica de alta complejidad con simulaciones orbitales y gravitacionales en tiempo real (HTML5 Canvas a 60 FPS), telemetría interactiva, comparador de escalas relativistas y arquitectura Mobile-First híbrida (*Observatory OS*).
+> Interfaz web interactiva/científica de alta complejidad con simulaciones orbitales y gravitacionales en tiempo real (HTML5 Canvas a 60 FPS), telemetría interactiva, comparador de escalas relativistas y arquitectura Mobile-First híbrida (*Observatory OS*).
 
 ---
 
