@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEXO — Inmobiliaria de Autor & Consultoría Residencial</title>
+  <meta name="description" content="Inmobiliaria de autor en Madrid y Barcelona. Chalets exclusivos, áticos de diseño, pisos familiares y oficinas con asesoramiento transparente y cercano.">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <!-- Google Fonts: Syne + Plus Jakarta Sans + Cormorant Garamond (Firma By Aleph) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,600;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN con Paleta Corporativa Azul Marino & Hielo -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            canvas: '#F0F4F8',
+            surface: '#FFFFFF',
+            navy: {
+              DEFAULT: '#0F1E36',
+              dark: '#0A1324',
+              light: '#1A3156',
+              muted: '#526071'
+            },
+            azure: {
+              DEFAULT: '#0284C7',
+              dark: '#0369A1',
+              light: '#38BDF8',
+              subtle: 'rgba(2, 132, 199, 0.12)'
+            },
+            ice: {
+              subtle: '#E2EBF4',
+              dark: '#CBD8E6',
+              light: '#F7FAFC'
+            }
+          },
+          fontFamily: {
+            display: ['"Syne"', 'sans-serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Estilos Personalizados Mobile-First -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-canvas text-navy antialiased selection:bg-azure selection:text-white">
+
+  <!-- =========================================================================
+       1. Header & Pestañas de Navegación Principal
+       ========================================================================= -->
+  <header id="main-nav" class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-ice-dark transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- Brand Logo -->
+        <a href="#inicio" data-subpage-target="inicio" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-xl bg-navy text-white flex items-center justify-center transition-transform group-hover:scale-105 shadow-sm">
+            <!-- House / Real Estate Icon SVG -->
+            <svg class="w-5 h-5 text-azure" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+          </div>
+          <div class="flex flex-col">
+            <div class="flex items-baseline gap-2">
+              <span class="font-display text-2xl font-bold tracking-tight text-navy">NEXO</span>
+              <span class="font-serif italic font-semibold text-base text-azure border-l border-ice-dark pl-2">By Aleph</span>
+            </div>
+            <span class="text-[9px] uppercase tracking-[0.22em] font-bold text-navy-muted -mt-0.5">Real Estate</span>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation Tabs (Conmutador de Subpáginas) -->
+        <nav class="hidden md:flex items-center gap-1.5 bg-ice-subtle/80 p-1.5 rounded-2xl border border-ice-dark text-xs uppercase tracking-wider font-semibold text-navy-muted">
+          <button 
+            type="button" 
+            data-subpage-target="inicio" 
+            class="subpage-nav-link px-4 py-2 rounded-xl transition-all hover:text-navy active"
+          >
+            Inicio
+          </button>
+          <button 
+            type="button" 
+            data-subpage-target="propiedades" 
+            class="subpage-nav-link px-4 py-2 rounded-xl transition-all hover:text-navy"
+          >
+            Propiedades
+          </button>
+          <button 
+            type="button" 
+            data-subpage-target="servicios" 
+            class="subpage-nav-link px-4 py-2 rounded-xl transition-all hover:text-navy flex items-center gap-1.5"
+          >
+            <span>Home Staging</span>
+            <span class="px-1.5 py-0.5 text-[9px] bg-azure/15 text-azure font-bold rounded">Interactivo</span>
+          </button>
+          <button 
+            type="button" 
+            data-subpage-target="contacto" 
+            class="subpage-nav-link px-4 py-2 rounded-xl transition-all hover:text-navy"
+          >
+            Contacto &amp; Tasación
+          </button>
+        </nav>
+
+        <!-- Desktop CTA -->
+        <div class="hidden md:flex items-center gap-4">
+          <button 
+            type="button" 
+            data-subpage-target="contacto" 
+            class="px-5 py-2.5 rounded-xl bg-azure hover:bg-azure-dark text-white text-xs font-bold uppercase tracking-wider transition-all duration-300 shadow-sm hover:shadow-md flex items-center gap-2"
+          >
+            <span>Tasar mi Inmueble</span>
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Mobile Menu Toggle Button -->
+        <div class="flex md:hidden">
+          <button id="mobile-menu-toggle" type="button" class="p-2.5 rounded-xl bg-ice-subtle text-navy hover:text-azure transition-colors" aria-label="Abrir menú de navegación">
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="3" y1="12" x2="21" y2="12"/>
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Overlay -->
+  <div id="mobile-drawer-overlay" class="hidden fixed inset-0 z-50 bg-navy/60 backdrop-blur-sm transition-opacity"></div>
+
+  <!-- Mobile Drawer Menu -->
+  <div id="mobile-drawer" class="fixed top-0 right-0 z-50 w-4/5 max-w-sm h-full bg-white shadow-2xl p-6 flex flex-col justify-between transform translate-x-full transition-transform duration-300 ease-out border-l border-ice-dark">
+    <div>
+      <div class="flex items-center justify-between pb-6 border-b border-ice-dark">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-navy text-azure flex items-center justify-center">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            </svg>
+          </div>
+          <div class="flex flex-col">
+            <span class="font-display text-lg font-bold text-navy">NEXO</span>
+            <span class="font-serif italic text-xs text-azure">By Aleph</span>
+          </div>
+        </div>
+        <button id="mobile-menu-close" type="button" class="p-2 text-navy-muted hover:text-navy rounded-lg" aria-label="Cerrar menú">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="flex flex-col gap-3 py-6 text-sm font-semibold uppercase tracking-wider text-navy">
+        <button type="button" data-subpage-target="inicio" class="mobile-drawer-link py-3 px-3 rounded-xl hover:bg-ice-subtle transition-colors flex items-center justify-between text-left">
+          <span>Inicio &amp; Destacados</span>
+          <svg class="w-4 h-4 text-azure" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+        <button type="button" data-subpage-target="propiedades" class="mobile-drawer-link py-3 px-3 rounded-xl hover:bg-ice-subtle transition-colors flex items-center justify-between text-left">
+          <span>Catálogo de Propiedades</span>
+          <svg class="w-4 h-4 text-azure" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+        <button type="button" data-subpage-target="servicios" class="mobile-drawer-link py-3 px-3 rounded-xl hover:bg-ice-subtle transition-colors flex items-center justify-between text-left">
+          <span class="text-azure">Home Staging Interactivo</span>
+          <span class="px-2 py-0.5 text-[9px] bg-azure/15 text-azure rounded font-bold">Slider</span>
+        </button>
+        <button type="button" data-subpage-target="contacto" class="mobile-drawer-link py-3 px-3 rounded-xl hover:bg-ice-subtle transition-colors flex items-center justify-between text-left">
+          <span>Tasación &amp; Contacto</span>
+          <svg class="w-4 h-4 text-azure" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="pt-6 border-t border-ice-dark space-y-3">
+      <button type="button" data-subpage-target="contacto" class="mobile-drawer-link block w-full py-3.5 text-center rounded-xl bg-azure text-white font-bold text-xs uppercase tracking-wider shadow-md">
+        Solicitar Valoración Gratuita
+      </button>
+      <div class="text-center text-[11px] text-navy-muted">
+        <p class="font-medium text-navy">Paseo de la Castellana 95, Madrid</p>
+        <p class="mt-0.5">Atención personalizada de lunes a viernes</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- =========================================================================
+       SUBPÁGINA 1: INICIO (Hero, Buscador, Destacados y Valor)
+       ========================================================================= -->
+  <div id="subpage-inicio" class="subpage active">
+    
+    <!-- Hero Inmobiliario -->
+    <section class="relative pt-10 pb-16 md:pt-16 md:pb-24 overflow-hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+          
+          <!-- Left Hero Copy -->
+          <div class="lg:col-span-7 space-y-6 sm:space-y-8 reveal-init">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-ice-dark text-xs font-semibold text-navy shadow-sm">
+              <span class="w-2 h-2 rounded-full bg-azure"></span>
+              <span>Consultoría Inmobiliaria &amp; Propiedades Seleccionadas</span>
+            </div>
+
+            <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold text-navy leading-[1.12] tracking-tight">
+              Hogares con alma. <span class="text-azure">Propiedades</span> que inspiran.
+            </h1>
+
+            <p class="text-base sm:text-lg text-navy-muted max-w-xl leading-relaxed">
+              Te acompañamos a comprar o vender con cercanía, transparencia y total tranquilidad. Sin tecnicismos ni presiones: seleccionamos únicamente inmuebles con carácter, luz natural y alta calidad de vida.
+            </p>
+
+            <!-- Buscador Rápido de Inmuebles -->
+            <form id="hero-search-form" class="bg-white p-4 sm:p-5 rounded-2xl border border-ice-dark shadow-lg grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div>
+                <label for="search-type" class="block text-[11px] font-bold text-navy-muted uppercase tracking-wider mb-1">Tipo de Inmueble</label>
+                <select id="search-type" class="w-full px-3 py-2 rounded-xl bg-canvas border border-ice-dark text-xs font-bold text-navy focus:outline-none focus:border-azure">
+                  <option value="todos">Todos los inmuebles</option>
+                  <option value="villas">Chalets &amp; Villas</option>
+                  <option value="aticos">Áticos &amp; Lofts</option>
+                  <option value="pisos">Pisos Familiares</option>
+                  <option value="oficinas">Oficinas &amp; Sedes</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="search-location" class="block text-[11px] font-bold text-navy-muted uppercase tracking-wider mb-1">Ubicación</label>
+                <select id="search-location" class="w-full px-3 py-2 rounded-xl bg-canvas border border-ice-dark text-xs font-bold text-navy focus:outline-none focus:border-azure">
+                  <option value="todas">Cualquier zona</option>
+                  <option value="madrid">Madrid &amp; Sierra</option>
+                  <option value="barcelona">Barcelona &amp; Costa</option>
+                  <option value="valencia">Valencia &amp; Levante</option>
+                </select>
+              </div>
+
+              <div class="flex items-end">
+                <button type="submit" class="w-full py-2.5 px-4 rounded-xl bg-navy hover:bg-azure text-white text-xs font-bold uppercase tracking-wider transition-colors flex items-center justify-center gap-2 shadow-sm">
+                  <svg class="w-4 h-4 text-azure hover:text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"/>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                  </svg>
+                  <span>Buscar</span>
+                </button>
+              </div>
+            </form>
+
+            <!-- Métricas Humanas -->
+            <div class="pt-6 border-t border-ice-dark grid grid-cols-3 gap-4 sm:gap-6">
+              <div>
+                <div class="font-display text-2xl sm:text-3xl font-extrabold text-navy">98%</div>
+                <p class="text-xs text-navy-muted font-medium mt-1">Clientes Satisfechos</p>
+              </div>
+              <div>
+                <div class="font-display text-2xl sm:text-3xl font-extrabold text-azure">28 Días</div>
+                <p class="text-xs text-navy-muted font-medium mt-1">Plazo Medio de Venta</p>
+              </div>
+              <div>
+                <div class="font-display text-2xl sm:text-3xl font-extrabold text-navy">150+</div>
+                <p class="text-xs text-navy-muted font-medium mt-1">Hogares Entregados</p>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Right Showcase Card -->
+          <div class="lg:col-span-5 reveal-init">
+            <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-white aspect-[4/5]">
+              <img 
+                src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=85" 
+                alt="Chalet independiente contemporáneo con piscina" 
+                class="w-full h-full object-cover"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-navy/75 via-transparent to-transparent"></div>
+
+              <!-- Floating Property Card -->
+              <div class="absolute bottom-5 left-5 right-5 p-4 rounded-2xl bg-white/95 backdrop-blur-md shadow-xl border border-ice-dark">
+                <div class="flex items-center justify-between mb-1.5">
+                  <span class="text-[10px] uppercase font-bold text-azure tracking-wider">Propiedad de la Semana</span>
+                  <span class="text-xs font-bold text-white bg-navy px-2.5 py-0.5 rounded-full">680.000 €</span>
+                </div>
+                <h4 class="font-display text-base font-bold text-navy">Villa Mirador del Valle</h4>
+                <p class="text-xs text-navy-muted mt-0.5">Guadarrama, Madrid · 340 m² con jardín y piscina privada.</p>
+                <div class="mt-3 pt-2.5 border-t border-ice-dark flex items-center justify-between">
+                  <span class="text-[11px] text-azure font-semibold">4 Dorms · 3 Baños</span>
+                  <button 
+                    type="button" 
+                    onclick="openPropertyModal('villa-mirador')"
+                    class="text-xs font-bold text-navy hover:text-azure flex items-center gap-1 transition-colors"
+                  >
+                    <span>Ver Ficha</span>
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Propiedades Destacadas de la Semana -->
+    <section class="py-16 md:py-20 bg-ice-subtle border-y border-ice-dark">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 reveal-init">
+          <div>
+            <span class="text-xs uppercase tracking-[0.2em] font-bold text-azure block mb-2">Selección Exclusiva</span>
+            <h2 class="font-display text-3xl sm:text-4xl font-extrabold text-navy leading-tight">
+              Inmuebles Destacados de la Semana
+            </h2>
+            <p class="text-sm text-navy-muted mt-2 max-w-xl">
+              Viviendas verificadas física y jurídicamente, listas para entrar a vivir o para visita presencial coordinada.
+            </p>
+          </div>
+
+          <button 
+            type="button" 
+            data-subpage-target="propiedades" 
+            class="px-6 py-3 rounded-xl bg-navy hover:bg-azure text-white text-xs font-bold uppercase tracking-wider transition-colors shadow-sm self-start md:self-auto flex items-center gap-2"
+          >
+            <span>Ver Catálogo Completo</span>
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Grid de Propiedades Destacadas (Renderizado Dinámicamente) -->
+        <div id="featured-properties-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Inyectado por properties.js -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Tres Pilares Humanos (Por qué confiar en NEXO) -->
+    <section class="py-16 md:py-24">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-2xl mx-auto mb-16 reveal-init">
+          <span class="text-xs uppercase tracking-[0.2em] font-bold text-azure block mb-2">Nuestra Filosofía</span>
+          <h2 class="font-display text-3xl sm:text-4xl font-extrabold text-navy leading-tight">
+            Una inmobiliaria hecha para personas, no para cifras.
+          </h2>
+          <p class="text-sm text-navy-muted mt-3 leading-relaxed">
+            Sabemos que comprar o vender tu casa es una de las decisiones más importantes de tu vida. Nos alejamos de las tácticas de presión para brindarte seguridad total:
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          
+          <div class="bg-white p-8 rounded-2xl border border-ice-dark shadow-sm reveal-init">
+            <div class="w-12 h-12 rounded-xl bg-ice-subtle text-azure flex items-center justify-center mb-6">
+              <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+            </div>
+            <span class="text-xs font-bold uppercase tracking-wider text-azure">01. Trato Directo</span>
+            <h3 class="font-display text-xl font-bold text-navy mt-2 mb-3">Un Asesor Dedicado</h3>
+            <p class="text-xs sm:text-sm text-navy-muted leading-relaxed">
+              Siempre hablarás con la misma persona. Alguien que conoce tu caso de memoria, atiende tus llamadas sin demoras y te acompaña en cada visita.
+            </p>
+          </div>
+
+          <div class="bg-white p-8 rounded-2xl border border-ice-dark shadow-sm reveal-init">
+            <div class="w-12 h-12 rounded-xl bg-ice-subtle text-azure flex items-center justify-center mb-6">
+              <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="5" width="20" height="14" rx="2"/>
+                <line x1="2" y1="10" x2="22" y2="10"/>
+              </svg>
+            </div>
+            <span class="text-xs font-bold uppercase tracking-wider text-azure">02. Cero Sorpresas</span>
+            <h3 class="font-display text-xl font-bold text-navy mt-2 mb-3">Transparencia Total</h3>
+            <p class="text-xs sm:text-sm text-navy-muted leading-relaxed">
+              Precios claros, honorarios pactados previamente y comprobación exhaustiva de cargas registrales para que firmes ante notario con absoluta tranquilidad.
+            </p>
+          </div>
+
+          <div class="bg-white p-8 rounded-2xl border border-ice-dark shadow-sm reveal-init">
+            <div class="w-12 h-12 rounded-xl bg-ice-subtle text-azure flex items-center justify-center mb-6">
+              <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+            </div>
+            <span class="text-xs font-bold uppercase tracking-wider text-azure">03. Valor Añadido</span>
+            <h3 class="font-display text-xl font-bold text-navy mt-2 mb-3">Home Staging Incluido</h3>
+            <p class="text-xs sm:text-sm text-navy-muted leading-relaxed">
+              Preparamos y vestimos cada inmueble para que enamore en las fotos y en persona. Reducimos el tiempo en el mercado y defendemos su valor real.
+            </p>
+          </div>
+
+        </div>
+
+        <!-- Banner de Tasación Rápida -->
+        <div class="mt-14 p-8 sm:p-10 rounded-3xl bg-navy text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl reveal-init">
+          <div>
+            <span class="text-xs uppercase font-bold text-azure tracking-wider block mb-1">Servicio Gratuito</span>
+            <h3 class="font-display text-2xl sm:text-3xl font-bold leading-tight">¿Quieres saber el valor real de tu vivienda hoy?</h3>
+            <p class="text-xs sm:text-sm text-[#CBD8E6] mt-1 max-w-xl">
+              Elaboramos un informe comparativo de mercado personalizado en menos de 24 horas. Sin coste ni compromiso alguno.
+            </p>
+          </div>
+          <button 
+            type="button" 
+            data-subpage-target="contacto" 
+            class="px-6 py-3.5 rounded-xl bg-azure hover:bg-azure-dark text-white font-bold text-xs uppercase tracking-wider transition-colors shrink-0 shadow-md"
+          >
+            Solicitar Tasación Gratuita
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+
+
+  <!-- =========================================================================
+       SUBPÁGINA 2: PROPIEDADES (Catálogo Completo y Filtros)
+       ========================================================================= -->
+  <div id="subpage-propiedades" class="subpage hidden">
+    <section class="py-12 md:py-20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Header del Catálogo y Filtros de Tipología -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 reveal-init">
+          <div>
+            <span class="text-xs uppercase tracking-[0.2em] font-bold text-azure block mb-2">Cartera Inmobiliaria</span>
+            <h2 class="font-display text-3xl sm:text-4xl font-extrabold text-navy leading-tight">
+              Nuestras Propiedades en Venta
+            </h2>
+            <p class="text-sm text-navy-muted mt-2 max-w-xl">
+              Filtra por tipología para encontrar el inmueble perfecto. Cada propiedad cuenta con plano de distribución, reportaje fotográfico y memoria de calidades.
+            </p>
+          </div>
+
+          <!-- Botones de Filtro -->
+          <div class="flex items-center gap-1.5 p-1.5 bg-white rounded-2xl border border-ice-dark shadow-sm overflow-x-auto max-w-full">
+            <button 
+              type="button" 
+              data-filter="todos" 
+              class="property-filter-btn px-4 py-2 text-xs font-bold rounded-xl transition-all bg-navy text-white shrink-0"
+            >
+              Todos
+            </button>
+            <button 
+              type="button" 
+              data-filter="villas" 
+              class="property-filter-btn px-4 py-2 text-xs font-bold rounded-xl transition-all bg-white text-navy hover:bg-ice-subtle shrink-0"
+            >
+              Chalets &amp; Villas
+            </button>
+            <button 
+              type="button" 
+              data-filter="aticos" 
+              class="property-filter-btn px-4 py-2 text-xs font-bold rounded-xl transition-all bg-white text-navy hover:bg-ice-subtle shrink-0"
+            >
+              Áticos &amp; Lofts
+            </button>
+            <button 
+              type="button" 
+              data-filter="pisos" 
+              class="property-filter-btn px-4 py-2 text-xs font-bold rounded-xl transition-all bg-white text-navy hover:bg-ice-subtle shrink-0"
+            >
+              Pisos Familiares
+            </button>
+            <button 
+              type="button" 
+              data-filter="oficinas" 
+              class="property-filter-btn px-4 py-2 text-xs font-bold rounded-xl transition-all bg-white text-navy hover:bg-ice-subtle shrink-0"
+            >
+              Oficinas &amp; Sedes
+            </button>
+          </div>
+        </div>
+
+        <!-- Grid Dinámico de Propiedades -->
+        <div id="properties-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Inyectado por properties.js -->
+        </div>
+
+        <!-- Bloque de Búsqueda Personalizada -->
+        <div class="mt-14 p-8 rounded-2xl bg-white border border-ice-dark flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left reveal-init">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl bg-ice-subtle text-azure flex items-center justify-center shrink-0">
+              <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"/>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              </svg>
+            </div>
+            <div>
+              <h4 class="font-display text-lg font-bold text-navy">¿No encuentras lo que estás buscando?</h4>
+              <p class="text-xs text-navy-muted mt-0.5">Tenemos propiedades en gestión discreta fuera de catálogo público. Dinos tus criterios y te las mostramos.</p>
+            </div>
+          </div>
+          <button 
+            type="button" 
+            data-subpage-target="contacto" 
+            class="px-5 py-3 rounded-xl bg-navy hover:bg-azure text-white text-xs font-bold uppercase tracking-wider transition-colors shrink-0 shadow-sm"
+          >
+            Encargar Búsqueda Personalizada
+          </button>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+
+  <!-- =========================================================================
+       SUBPÁGINA 3: SERVICIOS & HOME STAGING INTERACTIVO
+       ========================================================================= -->
+  <div id="subpage-servicios" class="subpage hidden">
+    <section class="py-12 md:py-20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Section Header -->
+        <div class="text-center max-w-2xl mx-auto mb-16 reveal-init">
+          <span class="text-xs uppercase tracking-[0.2em] font-bold text-azure block mb-2">Acompañamiento Integral</span>
+          <h2 class="font-display text-3xl sm:text-4xl font-extrabold text-navy leading-tight">
+            Cómo Trabajamos Contigo: De Principio a Fin
+          </h2>
+          <p class="text-sm text-navy-muted mt-3 leading-relaxed">
+            Vender o comprar un inmueble no tiene por qué ser una experiencia estresante. Dividimos el proceso en 4 pasos sencillos:
+          </p>
+        </div>
+
+        <!-- 4 Pasos Metodológicos -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
+          
+          <div class="p-6 rounded-2xl bg-white border border-ice-dark shadow-sm reveal-init">
+            <div class="w-10 h-10 rounded-xl bg-ice-subtle text-azure flex items-center justify-center font-display font-bold text-base mb-5">
+              01
+            </div>
+            <h3 class="font-display text-lg font-bold text-navy mb-2">Valoración Real &amp; Mercado</h3>
+            <p class="text-xs text-navy-muted leading-relaxed">
+              Analizamos los precios reales de cierre en tu zona para fijar un precio competitivo que proteja tu patrimonio sin estancar la venta.
+            </p>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-white border border-ice-dark shadow-sm reveal-init">
+            <div class="w-10 h-10 rounded-xl bg-ice-subtle text-azure flex items-center justify-center font-display font-bold text-base mb-5">
+              02
+            </div>
+            <h3 class="font-display text-lg font-bold text-navy mb-2">Home Staging &amp; Fotos</h3>
+            <p class="text-xs text-navy-muted leading-relaxed">
+              Despersonalizamos y preparamos los espacios con muebles de diseño y fotografía profesional de alta definición para captar la atención de inmediato.
+            </p>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-white border border-ice-dark shadow-sm reveal-init">
+            <div class="w-10 h-10 rounded-xl bg-ice-subtle text-azure flex items-center justify-center font-display font-bold text-base mb-5">
+              03
+            </div>
+            <h3 class="font-display text-lg font-bold text-navy mb-2">Filtro de Compradores</h3>
+            <p class="text-xs text-navy-muted leading-relaxed">
+              Verificamos la capacidad financiera de los interesados antes de programar visitas, evitando pérdidas de tiempo y molestias en tu hogar.
+            </p>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-white border border-ice-dark shadow-sm reveal-init">
+            <div class="w-10 h-10 rounded-xl bg-ice-subtle text-azure flex items-center justify-center font-display font-bold text-base mb-5">
+              04
+            </div>
+            <h3 class="font-display text-lg font-bold text-navy mb-2">Notaría &amp; Firma Segura</h3>
+            <p class="text-xs text-navy-muted leading-relaxed">
+              Redactamos el contrato de arras, tramitamos certificados energéticos y te acompañamos a la firma de escrituras en notaría hasta el cobro.
+            </p>
+          </div>
+
+        </div>
+
+        <!-- COMPONENTE ESTRELLA RECICLADO: Comparador Táctil de Home Staging -->
+        <div class="bg-navy text-white rounded-3xl p-6 sm:p-12 shadow-2xl reveal-init">
+          <div class="text-center max-w-2xl mx-auto mb-10">
+            <span class="text-xs uppercase tracking-[0.2em] font-bold text-azure block mb-2">Revalorización Inmobiliaria</span>
+            <h3 class="font-display text-2xl sm:text-3xl font-extrabold leading-tight">
+              El Poder del Home Staging: Multiplica el Interés
+            </h3>
+            <p class="text-xs sm:text-sm text-[#CBD8E6] mt-3 leading-relaxed">
+              Arrastra el tirador con el ratón o desliza con el dedo en tu móvil para comprobar la transformación. Un inmueble con puesta a punto se vende un 60% más rápido.
+            </p>
+          </div>
+
+          <div class="max-w-4xl mx-auto">
+            <div id="before-after-slider" class="before-after-container shadow-2xl border-2 border-white/20">
+              
+              <!-- Imagen "Después" (Fondo base amueblado y luminoso) -->
+              <img 
+                src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1400&q=85" 
+                alt="Espacio con Home Staging y amueblamiento de diseño" 
+                class="ba-image"
+              />
+
+              <!-- Overlay con Imagen "Antes" (Superpuesta y recortada) -->
+              <div id="ba-overlay" class="ba-overlay" style="width: 50%;">
+                <img 
+                  id="ba-image-before"
+                  src="https://images.unsplash.com/photo-1630699144919-681cf308ae82?auto=format&fit=crop&w=1400&q=85" 
+                  alt="Espacio sin amueblar o estado inicial" 
+                  class="ba-image"
+                />
+              </div>
+
+              <!-- Tirador Táctil Central -->
+              <div id="ba-handle" class="ba-handle" style="left: 50%;">
+                <svg class="w-5 h-5 text-navy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="8 7 3 12 8 17"/>
+                  <polyline points="16 7 21 12 16 17"/>
+                </svg>
+              </div>
+
+              <!-- Badges de Estado -->
+              <span class="ba-badge ba-badge-before">Estado Vacío</span>
+              <span class="ba-badge ba-badge-after">Con Home Staging</span>
+            </div>
+
+            <div class="mt-6 p-4 sm:p-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div>
+                <span class="text-[10px] uppercase font-bold text-azure tracking-wider">Caso de Éxito NEXO</span>
+                <h4 class="font-display text-base font-bold text-white">Revalorización en Poblenou, Barcelona</h4>
+                <p class="text-xs text-[#CBD8E6]">La vivienda llevaba 7 meses sin ofertas en otra agencia. Tras nuestro Home Staging se vendió en 21 días al precio fijado.</p>
+              </div>
+              <div class="shrink-0">
+                <span class="text-xs font-bold px-3 py-1.5 rounded-lg bg-azure text-white shadow-sm">
+                  +12% Valor de Venta
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+
+  <!-- =========================================================================
+       SUBPÁGINA 4: CONTACTO, TASACIÓN & PREGUNTAS FRECUENTES
+       ========================================================================= -->
+  <div id="subpage-contacto" class="subpage hidden">
+    <section class="py-12 md:py-20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="max-w-4xl mx-auto mb-16">
+          <div class="bg-white rounded-3xl border border-ice-dark shadow-xl overflow-hidden reveal-init">
+            <div class="grid grid-cols-1 md:grid-cols-12">
+              
+              <!-- Info Column -->
+              <div class="md:col-span-5 bg-navy text-white p-7 sm:p-9 flex flex-col justify-between">
+                <div>
+                  <span class="text-xs uppercase font-bold text-azure tracking-wider block mb-2">Atención Cercana</span>
+                  <h3 class="font-display text-2xl font-bold mb-3">Hablemos de tu Proyecto</h3>
+                  <p class="text-xs text-[#CBD8E6] leading-relaxed mb-6">
+                    Pásate a conocernos por nuestras sedes o déjanos un mensaje. Te responderemos el mismo día para resolver todas tus dudas.
+                  </p>
+
+                  <div class="space-y-4 text-xs text-[#CBD8E6]">
+                    <div class="flex items-start gap-3">
+                      <svg class="w-4 h-4 text-azure shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                        <circle cx="12" cy="10" r="3"/>
+                      </svg>
+                      <div>
+                        <p class="font-bold text-white">Madrid</p>
+                        <span>Paseo de la Castellana 95, Planta 8</span>
+                      </div>
+                    </div>
+
+                    <div class="flex items-start gap-3">
+                      <svg class="w-4 h-4 text-azure shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                        <circle cx="12" cy="10" r="3"/>
+                      </svg>
+                      <div>
+                        <p class="font-bold text-white">Barcelona</p>
+                        <span>Carrer de Pujades 102, Poblenou</span>
+                      </div>
+                    </div>
+
+                    <div class="flex items-start gap-3">
+                      <svg class="w-4 h-4 text-azure shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                      </svg>
+                      <span>+34 912 345 678</span>
+                    </div>
+
+                    <div class="flex items-start gap-3">
+                      <svg class="w-4 h-4 text-azure shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                        <polyline points="22,6 12,13 2,6"/>
+                      </svg>
+                      <span>hola@nexorealestate.es</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="pt-6 border-t border-navy-light text-[11px] text-[#A3B8CC]">
+                  Horario de atención: Lunes a Viernes de 09:00 a 19:30.
+                </div>
+              </div>
+
+              <!-- Form Column -->
+              <div class="md:col-span-7 p-7 sm:p-9 bg-white">
+                <h4 class="font-display text-xl font-bold text-navy mb-1">Solicitar Tasación o Visita</h4>
+                <p class="text-xs text-navy-muted mb-5">Déjanos tus datos y nos pondremos en contacto contigo de inmediato.</p>
+
+                <form id="contact-project-form" class="space-y-3.5">
+                  <div>
+                    <label for="contact-name" class="block text-xs font-bold text-navy mb-1">Nombre Completo</label>
+                    <input 
+                      type="text" 
+                      id="contact-name" 
+                      required
+                      placeholder="Ej. Carmen Navarro"
+                      class="w-full px-3.5 py-2.5 rounded-xl border border-ice-dark bg-canvas text-xs text-navy focus:outline-none focus:border-azure focus:bg-white transition-colors"
+                    >
+                  </div>
+
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                    <div>
+                      <label for="contact-email" class="block text-xs font-bold text-navy mb-1">Correo Electrónico</label>
+                      <input 
+                        type="email" 
+                        id="contact-email" 
+                        required
+                        placeholder="carmen@ejemplo.com"
+                        class="w-full px-3.5 py-2.5 rounded-xl border border-ice-dark bg-canvas text-xs text-navy focus:outline-none focus:border-azure focus:bg-white transition-colors"
+                      >
+                    </div>
+                    <div>
+                      <label for="contact-phone" class="block text-xs font-bold text-navy mb-1">Teléfono</label>
+                      <input 
+                        type="tel" 
+                        id="contact-phone" 
+                        placeholder="+34 600 000 000"
+                        class="w-full px-3.5 py-2.5 rounded-xl border border-ice-dark bg-canvas text-xs text-navy focus:outline-none focus:border-azure focus:bg-white transition-colors"
+                      >
+                    </div>
+                  </div>
+
+                  <div>
+                    <label for="contact-type" class="block text-xs font-bold text-navy mb-1">¿En qué podemos ayudarte?</label>
+                    <select 
+                      id="contact-type" 
+                      class="w-full px-3.5 py-2.5 rounded-xl border border-ice-dark bg-canvas text-xs text-navy focus:outline-none focus:border-azure focus:bg-white transition-colors"
+                    >
+                      <option value="tasacion">Quiero tasar y vender mi propiedad</option>
+                      <option value="visita">Quiero concertar una visita presencial</option>
+                      <option value="comprar">Busco comprar una vivienda con vosotros</option>
+                      <option value="staging">Consulta sobre servicio de Home Staging</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label for="contact-message" class="block text-xs font-bold text-navy mb-1">Mensaje o Detalles del Inmueble</label>
+                    <textarea 
+                      id="contact-message" 
+                      rows="3" 
+                      placeholder="Cuéntanos brevemente qué necesitas (zona, dormitorios, estado...)"
+                      class="w-full px-3.5 py-2.5 rounded-xl border border-ice-dark bg-canvas text-xs text-navy focus:outline-none focus:border-azure focus:bg-white transition-colors"
+                    ></textarea>
+                  </div>
+
+                  <button 
+                    type="submit" 
+                    class="w-full py-3.5 px-6 rounded-xl bg-azure hover:bg-azure-dark text-white font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-md flex items-center justify-center gap-2 mt-2"
+                  >
+                    <span>Enviar Solicitud</span>
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <line x1="5" y1="12" x2="19" y2="12"/>
+                      <polyline points="12 5 19 12 12 19"/>
+                    </svg>
+                  </button>
+                </form>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Preguntas Frecuentes Acordeón -->
+        <div class="max-w-3xl mx-auto reveal-init">
+          <div class="text-center mb-10">
+            <span class="text-xs uppercase tracking-[0.2em] font-bold text-azure block mb-2">Claridad &amp; Respuestas</span>
+            <h3 class="font-display text-2xl sm:text-3xl font-bold text-navy">Preguntas Frecuentes de Propietarios y Compradores</h3>
+          </div>
+
+          <div class="space-y-3">
+            <div class="border border-ice-dark rounded-xl overflow-hidden bg-white shadow-sm">
+              <button type="button" class="faq-trigger w-full px-5 py-4 text-left font-display font-bold text-sm text-navy flex items-center justify-between gap-4">
+                <span>¿Cuánto cuesta la valoración de mi inmueble con NEXO?</span>
+                <svg class="faq-icon w-4 h-4 text-azure shrink-0 transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="6 9 12 15 18 9"/>
+                </svg>
+              </button>
+              <div class="faq-content hidden px-5 pb-4 text-xs text-navy-muted leading-relaxed border-t border-ice-subtle pt-3">
+                Es 100% gratuita y sin compromiso. Uno de nuestros consultores examina el registro, las compraventas reales recientes en tu misma calle y te entrega un dossier detallado con el precio óptimo recomendado.
+              </div>
+            </div>
+
+            <div class="border border-ice-dark rounded-xl overflow-hidden bg-white shadow-sm">
+              <button type="button" class="faq-trigger w-full px-5 py-4 text-left font-display font-bold text-sm text-navy flex items-center justify-between gap-4">
+                <span>¿Cobráis honorarios si mi propiedad no llega a venderse?</span>
+                <svg class="faq-icon w-4 h-4 text-azure shrink-0 transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="6 9 12 15 18 9"/>
+                </svg>
+              </button>
+              <div class="faq-content hidden px-5 pb-4 text-xs text-navy-muted leading-relaxed border-t border-ice-subtle pt-3">
+                Rotundamente no. Trabajamos exclusivamente a éxito: asumimos el coste del Home Staging, el reportaje fotográfico profesional y la difusión en portales. Solo cobramos nuestros honorarios cuando se firma la venta ante notario.
+              </div>
+            </div>
+
+            <div class="border border-ice-dark rounded-xl overflow-hidden bg-white shadow-sm">
+              <button type="button" class="faq-trigger w-full px-5 py-4 text-left font-display font-bold text-sm text-navy flex items-center justify-between gap-4">
+                <span>¿Quién se encarga del contrato de arras y el papeleo legal?</span>
+                <svg class="faq-icon w-4 h-4 text-azure shrink-0 transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="6 9 12 15 18 9"/>
+                </svg>
+              </button>
+              <div class="faq-content hidden px-5 pb-4 text-xs text-navy-muted leading-relaxed border-t border-ice-subtle pt-3">
+                Nuestro equipo jurídico redacta el contrato de arras, solicita notas simples actualizadas, gestiona el certificado energético y coordina la cita con la notaría para que no tengas que preocuparte de ningún trámite burocrático.
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+
+  <!-- =========================================================================
+       10. Footer Corporativo
+       ========================================================================= -->
+  <footer class="bg-navy text-white pt-14 pb-8 border-t border-navy-light">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-8 pb-10 border-b border-navy-light">
+        <div class="md:col-span-5 space-y-3">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-lg bg-azure text-white flex items-center justify-center">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              </svg>
+            </div>
+            <div class="flex items-baseline gap-2">
+              <span class="font-display text-xl font-bold tracking-tight">NEXO Real Estate</span>
+              <span class="font-serif italic text-sm text-azure border-l border-navy-muted pl-2">By Aleph</span>
+            </div>
+          </div>
+          <p class="text-xs text-[#CBD8E6] max-w-sm leading-relaxed">
+            Inmobiliaria de autor y consultoría residencial en Madrid y Barcelona. Propiedades seleccionadas, asesoramiento legal íntegro y trato humano.
+          </p>
+        </div>
+
+        <div class="md:col-span-3 space-y-2">
+          <span class="text-xs uppercase font-bold text-white block">Subpáginas</span>
+          <ul class="space-y-1.5 text-xs text-[#CBD8E6]">
+            <li><button type="button" data-subpage-target="inicio" class="hover:text-azure transition-colors">Inicio</button></li>
+            <li><button type="button" data-subpage-target="propiedades" class="hover:text-azure transition-colors">Catálogo de Propiedades</button></li>
+            <li><button type="button" data-subpage-target="servicios" class="hover:text-azure transition-colors">Home Staging Interactivo</button></li>
+            <li><button type="button" data-subpage-target="contacto" class="hover:text-azure transition-colors">Contacto &amp; Tasación</button></li>
+          </ul>
+        </div>
+
+        <div class="md:col-span-4 space-y-2">
+          <span class="text-xs uppercase font-bold text-white block">Sedes Físicas</span>
+          <p class="text-xs text-[#CBD8E6]">Madrid: Paseo de la Castellana 95, Planta 8</p>
+          <p class="text-xs text-[#CBD8E6]">Barcelona: Carrer de Pujades 102, Poblenou</p>
+          <p class="text-xs text-azure font-mono pt-1">hola@nexorealestate.es</p>
+        </div>
+      </div>
+
+      <div class="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-[#CBD8E6] gap-3">
+        <p>&copy; 2026 NEXO Real Estate S.L. Todos los derechos reservados.</p>
+        <p class="text-[#CBD8E6]">Diseñado y construido con arquitectura de subpáginas fluidas por Aleph</p>
+      </div>
+
+    </div>
+  </footer>
+
+
+  <!-- =========================================================================
+       11. QUICK-ACTION BAR PARA MÓVILES (Fija en la parte inferior para <768px)
+       ========================================================================= -->
+  <nav class="md:hidden fixed bottom-0 left-0 right-0 z-40 mobile-quick-bar flex items-center justify-around py-2 px-3 shadow-2xl" aria-label="Navegación rápida móvil">
+    
+    <button type="button" data-subpage-target="inicio" class="quick-bar-item flex flex-col items-center gap-1 text-gray-400 hover:text-azure py-1 px-2 transition-colors active">
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+      </svg>
+      <span class="text-[10px] font-bold">Inicio</span>
+    </button>
+
+    <button type="button" data-subpage-target="propiedades" class="quick-bar-item flex flex-col items-center gap-1 text-gray-400 hover:text-azure py-1 px-2 transition-colors">
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="3" width="18" height="18" rx="2"/>
+        <line x1="3" y1="9" x2="21" y2="9"/>
+        <line x1="9" y1="21" x2="9" y2="9"/>
+      </svg>
+      <span class="text-[10px] font-bold">Inmuebles</span>
+    </button>
+
+    <button type="button" data-subpage-target="servicios" class="quick-bar-item flex flex-col items-center gap-1 text-gray-400 hover:text-azure py-1 px-2 transition-colors">
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="2" y="3" width="20" height="18" rx="2"/>
+        <line x1="12" y1="3" x2="12" y2="21"/>
+      </svg>
+      <span class="text-[10px] font-bold">Staging</span>
+    </button>
+
+    <button type="button" data-subpage-target="contacto" class="quick-bar-item flex flex-col items-center gap-1 text-gray-400 hover:text-azure py-1 px-2 transition-colors">
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+      </svg>
+      <span class="text-[10px] font-bold">Tasación</span>
+    </button>
+
+  </nav>
+
+
+  <!-- =========================================================================
+       12. Modal de Ficha Técnica Inmobiliaria
+       ========================================================================= -->
+  <div id="property-modal" class="hidden fixed inset-0 z-50 bg-navy/70 backdrop-blur-sm items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-3xl w-full p-6 sm:p-8 shadow-2xl border border-ice-dark relative max-h-[92vh] overflow-y-auto">
+      <button 
+        type="button" 
+        onclick="closePropertyModal()" 
+        class="absolute top-5 right-5 p-2 rounded-full text-navy-muted hover:text-navy hover:bg-ice-subtle transition-colors z-10"
+        aria-label="Cerrar ficha de propiedad"
+      >
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+
+      <div id="property-modal-body">
+        <!-- Contenido inyectado dinámicamente por properties.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenedor Flotante de Toasts -->
+  <div id="toast-container"></div>
+
+  <!-- =========================================================================
+       13. Widget Flotante de Chatbot Inmobiliario (Mateo Navarro)
+       0 Emojis — 100% Vectores SVG
+       ========================================================================= -->
+  <aside id="chatbot-widget" aria-label="Asistente Virtual Inmobiliario">
+    
+    <!-- Pastilla Teaser de Invitación al Chat -->
+    <div id="chatbot-teaser" class="chatbot-teaser" role="region" aria-label="Aviso de asesor disponible">
+      <div class="chatbot-teaser-avatar">
+        <img 
+          src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=120&q=80" 
+          alt="Mateo Navarro" 
+          class="w-full h-full object-cover"
+        />
+        <span class="chatbot-teaser-pulse" title="En línea"></span>
+      </div>
+      <div class="chatbot-teaser-content">
+        <p class="chatbot-teaser-author">Mateo · NEXO Concierge</p>
+        <p class="chatbot-teaser-text">¿Buscas vivienda o tasar? Te ayudo online</p>
+      </div>
+      <button type="button" id="chatbot-teaser-close" class="chatbot-teaser-dismiss" aria-label="Cerrar aviso flotante">
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Ventana Desplegable del Chat -->
+    <div id="chatbot-window" class="chatbot-window is-hidden" role="dialog" aria-modal="true" aria-labelledby="chatbot-header-title">
+      
+      <!-- Cabecera del Chat -->
+      <div class="chatbot-header">
+        <div class="chatbot-header-profile">
+          <div class="chatbot-avatar-wrap">
+            <img 
+              src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=160&q=80" 
+              alt="Mateo Navarro" 
+              class="chatbot-avatar-img"
+            />
+            <span class="chatbot-status-indicator" title="En línea ahora"></span>
+          </div>
+          <div>
+            <div class="flex items-center gap-1.5">
+              <h4 id="chatbot-header-title" class="font-display font-bold text-sm text-white leading-tight">Mateo Navarro</h4>
+              <span class="w-4 h-4 rounded-full bg-azure text-white flex items-center justify-center shrink-0" title="Asesor Verificado NEXO">
+                <svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </span>
+            </div>
+            <p class="text-[11px] text-[#CBD8E6] flex items-center gap-1 mt-0.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              Asesor Senior · NEXO Concierge
+            </p>
+          </div>
+        </div>
+
+        <button 
+          type="button" 
+          id="chatbot-close-btn" 
+          class="chatbot-close-action"
+          aria-label="Cerrar chat"
+        >
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Sub-banner informativo -->
+      <div class="chatbot-notice-bar">
+        <span class="flex items-center gap-1.5 font-medium text-[11px] text-navy">
+          <svg class="w-3.5 h-3.5 text-azure" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          Respuesta instantánea en directo
+        </span>
+        <span class="text-[10px] text-slate-500 font-semibold">Madrid &amp; BCN</span>
+      </div>
+
+      <!-- Historial de Mensajes -->
+      <div id="chatbot-messages" class="chatbot-messages">
+        <!-- Timestamp Inicial -->
+        <div class="chat-timestamp-badge">Hoy · Asesor Asignado</div>
+
+        <!-- Saludo Inicial -->
+        <div class="chat-bubble chat-bubble-assistant">
+          <div class="bubble-author">
+            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+            <span>Mateo Navarro</span>
+          </div>
+          Hola, soy Mateo, tu asesor personal en NEXO Real Estate. ¿En qué puedo ayudarte hoy?
+        </div>
+      </div>
+
+      <!-- Chips de Respuestas Rápidas con Iconos SVG -->
+      <div class="chatbot-quick-replies" aria-label="Sugerencias rápidas">
+        <div class="chatbot-quick-title">
+          <svg class="w-3 h-3 text-azure" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+          <span>Acciones recomendadas</span>
+        </div>
+        <div class="chatbot-chips-grid">
+          <button type="button" class="chatbot-chip" data-action="villas" data-label="Ver chalets y villas">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+            <span>Chalets &amp; Villas</span>
+          </button>
+          <button type="button" class="chatbot-chip" data-action="tasacion" data-label="Quiero tasar mi vivienda">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="20" x2="18" y2="10"/>
+              <line x1="12" y1="20" x2="12" y2="4"/>
+              <line x1="6" y1="20" x2="6" y2="14"/>
+            </svg>
+            <span>Tasar mi vivienda</span>
+          </button>
+          <button type="button" class="chatbot-chip" data-action="staging" data-label="¿Cómo funciona el Staging?">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="3" width="20" height="18" rx="2"/>
+              <line x1="12" y1="3" x2="12" y2="21"/>
+            </svg>
+            <span>Home Staging</span>
+          </button>
+          <button type="button" class="chatbot-chip" data-action="contacto" data-label="Hablar con un asesor">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+            <span>Contactar Asesor</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Formulario de Entrada de Texto -->
+      <form id="chatbot-form" class="chatbot-input-area">
+        <div class="chatbot-input-wrap">
+          <input 
+            type="text" 
+            id="chatbot-input" 
+            class="chatbot-input" 
+            placeholder="Escribe tu consulta o requerimiento..." 
+            autocomplete="off" 
+            aria-label="Mensaje para el asesor"
+          />
+          <button 
+            type="submit" 
+            class="chatbot-send-btn" 
+            aria-label="Enviar mensaje"
+          >
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="22" y1="2" x2="11" y2="13"/>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+            </svg>
+          </button>
+        </div>
+        <p class="chatbot-footer-caption">NEXO Concierge · Asesoramiento residencial confidencial</p>
+      </form>
+    </div>
+
+    <!-- Botón Burbuja Flotante de Activación -->
+    <button 
+      type="button" 
+      id="chatbot-toggle-btn" 
+      class="chatbot-btn shadow-2xl" 
+      aria-label="Abrir asistente virtual inmobiliario" 
+      aria-expanded="false"
+    >
+      <!-- Icono Mensaje (por defecto) -->
+      <svg class="w-6 h-6 chatbot-icon-msg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+      </svg>
+      <!-- Icono Cerrar (al abrir) -->
+      <svg class="w-6 h-6 chatbot-icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+      <!-- Indicador online en el botón -->
+      <span class="chatbot-live-dot" title="Asesor en línea"></span>
+    </button>
+  </aside>
+
+  <!-- Scripts Modulares -->
+  <script src="js/before-after.js"></script>
+  <script src="js/properties.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

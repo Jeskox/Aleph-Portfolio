@@ -1,0 +1,804 @@
+/* ==========================================================================
+   NEXO Real Estate — Inmobiliaria de Autor & Consultoría Residencial
+   Estilos Mobile-First, Pestañas / Subpáginas, Paleta Azul Corporativa y Chatbot
+   0 Emojis — 100% Vectores SVG
+   ========================================================================== */
+
+:root {
+  --color-canvas: #F0F4F8;        /* Azul hielo suave de fondo */
+  --color-surface: #FFFFFF;       /* Superficie blanca limpia */
+  --color-navy: #0F1E36;          /* Azul marino corporativo profundo */
+  --color-navy-dark: #0A1324;     /* Azul marino ultra oscuro */
+  --color-navy-light: #1A3156;    /* Azul marino medio */
+  --color-ice-subtle: #E2EBF4;    /* Azul hielo intermedio para tarjetas */
+  --color-ice-dark: #CBD8E6;      /* Borde suave azulado */
+  --color-azure: #0284C7;         /* Azul zafiro / azure corporativo fresco */
+  --color-azure-dark: #0369A1;    /* Azul zafiro hover / activo */
+  --color-azure-light: #38BDF8;   /* Azul claro para detalles */
+  --color-azure-subtle: rgba(2, 132, 199, 0.12); /* Fondo suave de píldoras */
+  --color-slate: #526071;         /* Gris azulado para textos secundarios */
+}
+
+/* Configuración Mobile-First & Prevención de Overflow */
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--color-canvas);
+  color: var(--color-navy);
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+  /* Espacio inferior en móvil para que la Quick-Action Bar no tape el contenido */
+  padding-bottom: 74px;
+}
+
+@media (min-width: 768px) {
+  body {
+    padding-bottom: 0;
+  }
+}
+
+.font-display {
+  font-family: 'Syne', sans-serif;
+}
+
+/* Scrollbar Minimalista Corporativa */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-ice-subtle);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-ice-dark);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-azure);
+}
+
+/* ==========================================================================
+   Arquitectura de Pestañas / Subpáginas Dinámicas
+   ========================================================================== */
+.subpage {
+  display: none;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out;
+}
+
+.subpage.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Enlaces de Navegación de Subpáginas */
+.subpage-nav-link {
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.subpage-nav-link.active {
+  color: var(--color-azure) !important;
+  font-weight: 700;
+}
+
+.subpage-nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--color-azure);
+  border-radius: 9999px;
+}
+
+/* Quick-Action Bar Móvil */
+.mobile-quick-bar {
+  background: rgba(15, 30, 54, 0.96);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid rgba(203, 216, 230, 0.2);
+  padding-bottom: max(10px, env(safe-area-inset-bottom));
+}
+
+.quick-bar-item {
+  transition: all 0.2s ease;
+}
+
+.quick-bar-item.active {
+  color: var(--color-azure) !important;
+}
+
+/* ==========================================================================
+   Tarjetas Inmobiliarias & Micro-Interacciones
+   ========================================================================== */
+.card-property {
+  background: #FFFFFF;
+  border: 1px solid var(--color-ice-dark);
+  border-radius: 1.25rem;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+}
+
+.card-property:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 36px -10px rgba(15, 30, 54, 0.12);
+  border-color: #A3B8CC;
+}
+
+/* ==========================================================================
+   Comparador Táctil Antes / Después (Home Staging)
+   ========================================================================== */
+.before-after-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: pan-y;
+  cursor: ew-resize;
+  border-radius: 1.25rem;
+}
+
+@media (max-width: 640px) {
+  .before-after-container {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+.ba-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.ba-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  border-right: 2px solid #FFFFFF;
+  box-shadow: 4px 0 25px rgba(0, 0, 0, 0.35);
+  transition: none;
+}
+
+.ba-overlay .ba-image {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+}
+
+.ba-handle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  color: var(--color-navy);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 10;
+  border: 3px solid var(--color-azure);
+  transition: transform 0.1s ease;
+}
+
+.ba-handle:active {
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.ba-badge {
+  position: absolute;
+  bottom: 16px;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  pointer-events: none;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 5;
+}
+
+.ba-badge-before {
+  left: 16px;
+  background: rgba(15, 30, 54, 0.85);
+  color: #FFFFFF;
+}
+
+.ba-badge-after {
+  right: 16px;
+  background: rgba(2, 132, 199, 0.92);
+  color: #FFFFFF;
+}
+
+/* ==========================================================================
+   Burbuja Flotante & Concierge Inmobiliario de Lujo (Chatbot Rediseñado)
+   0 Emojis — 100% Vectores SVG — Ergonomía Mobile-First
+   ========================================================================== */
+#chatbot-widget {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  pointer-events: none;
+}
+
+@media (max-width: 767px) {
+  #chatbot-widget {
+    bottom: 84px; /* Separación sobre la barra rápida móvil */
+    right: 16px;
+  }
+}
+
+/* Pastilla Teaser de Invitación */
+.chatbot-teaser {
+  pointer-events: auto;
+  margin-bottom: 12px;
+  background: #FFFFFF;
+  border: 1px solid var(--color-ice-dark);
+  border-radius: 9999px;
+  padding: 8px 14px 8px 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 16px 32px -8px rgba(15, 30, 54, 0.25);
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, opacity 0.25s ease;
+  max-width: 290px;
+  animation: teaserFloat 3s ease-in-out infinite;
+}
+
+.chatbot-teaser:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 40px -8px rgba(2, 132, 199, 0.3);
+}
+
+.chatbot-teaser.is-dismissed {
+  opacity: 0;
+  transform: translateY(8px) scale(0.95);
+  pointer-events: none;
+  display: none;
+}
+
+@keyframes teaserFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.chatbot-teaser-avatar {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--color-navy);
+}
+
+.chatbot-teaser-pulse {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #10B981;
+  border: 2px solid #FFFFFF;
+}
+
+.chatbot-teaser-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.chatbot-teaser-author {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-navy);
+  line-height: 1.2;
+}
+
+.chatbot-teaser-text {
+  font-size: 10px;
+  color: var(--color-slate);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+}
+
+.chatbot-teaser-dismiss {
+  padding: 4px;
+  color: #94A3B8;
+  border-radius: 50%;
+  transition: color 0.15s ease, background-color 0.15s ease;
+  flex-shrink: 0;
+}
+
+.chatbot-teaser-dismiss:hover {
+  color: var(--color-navy);
+  background-color: var(--color-ice-subtle);
+}
+
+/* Botón Burbuja Flotante */
+.chatbot-btn {
+  pointer-events: auto;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0F1E36 0%, #0369A1 100%);
+  color: #FFFFFF;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 14px 32px -4px rgba(2, 132, 199, 0.45), 0 6px 14px -2px rgba(15, 30, 54, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+  position: relative;
+}
+
+.chatbot-btn:hover {
+  transform: scale(1.08) translateY(-2px);
+  box-shadow: 0 18px 38px -4px rgba(2, 132, 199, 0.55), 0 8px 18px -2px rgba(15, 30, 54, 0.35);
+}
+
+.chatbot-btn .chatbot-icon-close {
+  display: none;
+}
+
+.chatbot-btn.active {
+  background: var(--color-navy);
+}
+
+.chatbot-btn.active .chatbot-icon-msg {
+  display: none;
+}
+
+.chatbot-btn.active .chatbot-icon-close {
+  display: block;
+}
+
+.chatbot-live-dot {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #10B981;
+  border: 2.5px solid #FFFFFF;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.3);
+}
+
+/* Ventana de Chat */
+.chatbot-window {
+  pointer-events: auto;
+  position: absolute;
+  bottom: 76px;
+  right: 0;
+  width: 380px;
+  max-width: calc(100vw - 32px);
+  height: 560px;
+  max-height: calc(100vh - 120px);
+  background: #FFFFFF;
+  border: 1px solid rgba(203, 216, 230, 0.85);
+  border-radius: 1.75rem;
+  box-shadow: 0 28px 64px -14px rgba(15, 30, 54, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transform-origin: bottom right;
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s;
+}
+
+@media (max-width: 480px) {
+  .chatbot-window {
+    width: calc(100vw - 24px);
+    right: -4px;
+    height: 520px;
+  }
+}
+
+.chatbot-window.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.92) translateY(16px);
+  pointer-events: none;
+}
+
+.chatbot-window.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1) translateY(0);
+  pointer-events: auto;
+}
+
+/* Cabecera del Chat */
+.chatbot-header {
+  padding: 16px 20px;
+  background: linear-gradient(135deg, #0F1E36 0%, #1A3156 100%);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+}
+
+.chatbot-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(56, 189, 248, 0.6) 50%, transparent 100%);
+}
+
+.chatbot-header-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.chatbot-avatar-wrap {
+  position: relative;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--color-navy-dark);
+}
+
+.chatbot-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.chatbot-status-indicator {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #10B981;
+  border: 2px solid var(--color-navy);
+}
+
+.chatbot-close-action {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  color: #CBD8E6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.chatbot-close-action:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #FFFFFF;
+}
+
+/* Sub-banner informativo */
+.chatbot-notice-bar {
+  padding: 8px 16px;
+  background: #F1F5F9;
+  border-bottom: 1px solid #E2E8F0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--color-slate);
+}
+
+/* Área de Mensajes */
+.chatbot-messages {
+  flex: 1;
+  padding: 16px 18px;
+  background: #F8FAFC;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  scroll-behavior: smooth;
+}
+
+.chatbot-messages::-webkit-scrollbar {
+  width: 5px;
+}
+.chatbot-messages::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 9999px;
+}
+
+.chat-timestamp-badge {
+  align-self: center;
+  padding: 3px 10px;
+  background: #E2E8F0;
+  border-radius: 9999px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #64748B;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 4px;
+}
+
+/* Burbujas de Chat */
+.chat-bubble {
+  max-width: 86%;
+  font-size: 12.5px;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+.chat-bubble-assistant {
+  background: #FFFFFF;
+  color: var(--color-navy);
+  border: 1px solid #E2E8F0;
+  border-radius: 18px 18px 18px 4px;
+  padding: 12px 16px;
+  box-shadow: 0 4px 12px -2px rgba(15, 30, 54, 0.05);
+}
+
+.chat-bubble-assistant .bubble-author {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--color-azure);
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.chat-bubble-user {
+  background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%);
+  color: #FFFFFF;
+  border-radius: 18px 18px 4px 18px;
+  padding: 12px 16px;
+  align-self: flex-end;
+  box-shadow: 0 6px 16px -2px rgba(2, 132, 199, 0.35);
+  font-weight: 500;
+}
+
+/* Acciones Rápidas (Chips con Iconos) */
+.chatbot-quick-replies {
+  padding: 10px 16px 12px;
+  background: #FFFFFF;
+  border-top: 1px solid #F1F5F9;
+}
+
+.chatbot-quick-title {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #64748B;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.chatbot-chips-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.chatbot-chip {
+  background: #F8FAFC;
+  border: 1px solid var(--color-ice-dark);
+  color: var(--color-navy);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 8px 10px;
+  border-radius: 12px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-align: left;
+}
+
+.chatbot-chip:hover {
+  background: #F0F9FF;
+  border-color: var(--color-azure);
+  color: var(--color-azure);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px -2px rgba(2, 132, 199, 0.15);
+}
+
+.chatbot-chip svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  color: var(--color-azure);
+}
+
+/* Área de Entrada de Mensaje */
+.chatbot-input-area {
+  padding: 12px 16px;
+  background: #FFFFFF;
+  border-top: 1px solid var(--color-ice-dark);
+}
+
+.chatbot-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #F1F5F9;
+  border: 1px solid #CBD5E1;
+  border-radius: 9999px;
+  padding: 4px 6px 4px 14px;
+  transition: border-color 0.2s, background-color 0.2s, box-shadow 0.2s;
+}
+
+.chatbot-input-wrap:focus-within {
+  background: #FFFFFF;
+  border-color: var(--color-azure);
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+}
+
+.chatbot-input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: none;
+  font-size: 12px;
+  color: var(--color-navy);
+  outline: none;
+}
+
+.chatbot-input::placeholder {
+  color: #94A3B8;
+}
+
+.chatbot-send-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--color-azure);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+  flex-shrink: 0;
+}
+
+.chatbot-send-btn:hover {
+  background: var(--color-azure-dark);
+  transform: scale(1.05);
+}
+
+.chatbot-footer-caption {
+  font-size: 9.5px;
+  color: #94A3B8;
+  text-align: center;
+  margin-top: 6px;
+  letter-spacing: 0.02em;
+}
+
+/* Indicador de escritura animado */
+.typing-dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 10px;
+}
+
+.typing-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-azure);
+  animation: typingBounce 1.2s infinite ease-in-out;
+}
+
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typingBounce {
+  0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+  40% { transform: translateY(-5px); opacity: 1; }
+}
+
+/* ==========================================================================
+   Notificaciones Toast
+   ========================================================================== */
+#toast-container {
+  position: fixed;
+  bottom: 84px;
+  right: 16px;
+  left: 16px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+}
+
+@media (min-width: 640px) {
+  #toast-container {
+    left: auto;
+    bottom: 24px;
+    right: 24px;
+    max-width: 400px;
+  }
+}
+
+.toast {
+  pointer-events: auto;
+  background: var(--color-navy);
+  color: #FFFFFF;
+  padding: 14px 16px;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px -10px rgba(15, 30, 54, 0.35);
+  border-left: 4px solid var(--color-azure);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transform: translateY(16px);
+  opacity: 0;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+}
+
+.toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Animaciones suaves de scroll */
+.reveal-init {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-active {
+  opacity: 1;
+  transform: translateY(0);
+}
