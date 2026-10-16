@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>COSMOS By Aleph — Observatorio &amp; Archivo Astrofísico</title>
+  <meta name="description" content="Plataforma de observación astronómica, simulación orbital kepleriana, dinámica gravitacional y archivo enciclopédico del espacio profundo.">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <!-- Google Fonts: Orbitron (Espacial/Seria), Rajdhani, IBM Plex Sans (Enciclopédica), IBM Plex Mono y Cormorant Garamond (Firma By Aleph) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,600;1,700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&family=Orbitron:wght@500;600;700;800&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            abyss: '#04060A',
+            obsidian: '#080C14',
+            panel: '#0A0E18',
+            cyanOrbital: '#38BDF8',
+            amberSolar: '#F59E0B'
+          },
+          fontFamily: {
+            display: ['"Orbitron"', 'sans-serif'],
+            tech: ['"Rajdhani"', 'sans-serif'],
+            sans: ['"IBM Plex Sans"', 'sans-serif'],
+            mono: ['"IBM Plex Mono"', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Estilos Personalizados -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-abyss text-slate-200 antialiased selection:bg-white selection:text-abyss space-grid-overlay">
+
+  <!-- Lienzo de Fondo Estelar -->
+  <canvas id="starfield-canvas"></canvas>
+
+  <div class="relative z-10 flex min-h-screen">
+
+    <!-- =======================================================================
+         1. SIDEBAR TÉCNICA (ESCRITORIO)
+         ======================================================================= -->
+    <aside class="hidden lg:flex flex-col justify-between w-64 shrink-0 border-r border-white/10 bg-[#050810]/90 backdrop-blur-xl sticky top-0 h-screen p-6">
+      <div>
+        <!-- Identidad COSMOS + Firma By Aleph -->
+        <a href="#planetario" class="block pb-6 border-b border-white/10 group">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-lg bg-white/5 border border-white/15 text-white flex items-center justify-center group-hover:border-white/40 transition-colors">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <circle cx="12" cy="12" r="3.5"/>
+                <ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(-28 12 12)"/>
+              </svg>
+            </div>
+            <div>
+              <div class="flex items-baseline gap-2">
+                <span class="font-display text-base font-bold tracking-widest text-white">COSMOS</span>
+                <span class="signature-aleph text-base">By Aleph</span>
+              </div>
+              <span class="font-mono text-[9px] uppercase tracking-[0.2em] text-slate-500 block mt-0.5">
+                Astrophysical Archive
+              </span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Navegación Sobria -->
+        <div class="mt-8">
+          <span class="px-3 text-[10px] font-mono uppercase tracking-[0.2em] text-slate-500 block mb-3">
+            Índice del Observatorio
+          </span>
+          <nav class="space-y-1 text-xs font-medium">
+            <a href="#planetario" class="os-nav-link flex items-center gap-3 px-3.5 py-3 rounded-lg border border-white/15 bg-white/5 text-white transition-all">
+              <svg class="w-4 h-4 shrink-0 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <circle cx="12" cy="12" r="3"/>
+                <circle cx="12" cy="12" r="9" stroke-dasharray="3 3"/>
+              </svg>
+              <span>01. Sistema Orbital</span>
+            </a>
+
+            <a href="#sandbox" class="os-nav-link flex items-center gap-3 px-3.5 py-3 rounded-lg border border-transparent text-slate-400 hover:text-white hover:bg-white/[0.03] transition-all">
+              <svg class="w-4 h-4 shrink-0 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M12 2v20M2 12h20"/>
+                <circle cx="12" cy="12" r="6"/>
+              </svg>
+              <span>02. Dinámica Gravitacional</span>
+            </a>
+
+            <a href="#relatividad" class="os-nav-link flex items-center gap-3 px-3.5 py-3 rounded-lg border border-transparent text-slate-400 hover:text-white hover:bg-white/[0.03] transition-all">
+              <svg class="w-4 h-4 shrink-0 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <circle cx="7" cy="12" r="3"/>
+                <circle cx="16" cy="12" r="6"/>
+              </svg>
+              <span>03. Escalas &amp; Relatividad</span>
+            </a>
+
+            <a href="#atlas" class="os-nav-link flex items-center gap-3 px-3.5 py-3 rounded-lg border border-transparent text-slate-400 hover:text-white hover:bg-white/[0.03] transition-all">
+              <svg class="w-4 h-4 shrink-0 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <circle cx="12" cy="12" r="9"/>
+                <path d="M12 3a9 9 0 0 0 0 18"/>
+              </svg>
+              <span>04. Enciclopedia Messier / NGC</span>
+            </a>
+          </nav>
+        </div>
+      </div>
+
+      <!-- Pie de Sidebar con Animación en Miniatura del Horizonte de Sucesos -->
+      <div class="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-2.5">
+        <div class="flex items-center justify-between text-[10px] font-mono text-slate-400">
+          <span>EFEMÉRIDES JPL DE440</span>
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+        </div>
+        <p class="text-[11px] text-slate-400 leading-relaxed">
+          Cartografía celeste y modelos relativistas basados en observaciones de ESO, ESA y NASA.
+        </p>
+      </div>
+    </aside>
+
+    <!-- =======================================================================
+         2. CONTENEDOR PRINCIPAL
+         ======================================================================= -->
+    <div class="flex-1 flex flex-col min-w-0">
+
+      <!-- Cabecera Superior Limpia -->
+      <header class="sticky top-0 z-30 bg-[#04060A]/85 backdrop-blur-xl border-b border-white/10 px-4 sm:px-8 h-16 flex items-center justify-between gap-4">
+        
+        <!-- Título + Firma By Aleph (Visible en Móvil y PC) -->
+        <div class="flex items-baseline gap-2.5">
+          <span class="font-display text-base sm:text-lg font-bold tracking-widest text-white">COSMOS</span>
+          <span class="signature-aleph text-lg sm:text-xl">By Aleph</span>
+        </div>
+
+        <!-- Reloj Astronómico UTC Sobrio -->
+        <div class="hidden md:flex items-center gap-6 text-[11px] font-mono text-slate-400">
+          <div class="flex items-center gap-2">
+            <span class="text-slate-500">TIEMPO UNIVERSAL:</span>
+            <span id="utc-telemetry-clock" class="text-slate-200">2026-10-15 23:45:00 UTC</span>
+          </div>
+          <div class="hidden xl:flex items-center gap-2 border-l border-white/10 pl-6">
+            <span class="text-slate-500">SONDA VOYAGER 1:</span>
+            <span id="voyager-distance-ticker" class="text-slate-200">24.684.910.240 km</span>
+          </div>
+        </div>
+
+        <!-- Botón Menú Móvil -->
+        <div class="flex items-center gap-3">
+          <a href="#atlas" class="hidden sm:inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-white/5 hover:bg-white text-slate-200 hover:text-abyss border border-white/15 text-xs font-medium transition-all">
+            <span>Archivo Messier / NGC</span>
+          </a>
+
+          <button id="mobile-drawer-open" type="button" class="lg:hidden p-2 rounded-lg bg-white/5 border border-white/10 text-slate-200" aria-label="Abrir navegación">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <line x1="3" y1="12" x2="21" y2="12"/>
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+          </button>
+        </div>
+
+      </header>
+
+      <!-- Drawer Móvil -->
+      <div id="mobile-os-backdrop" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm"></div>
+      <div id="mobile-os-drawer" class="fixed top-0 right-0 z-50 w-4/5 max-w-xs h-full bg-[#060911] border-l border-white/10 p-6 flex flex-col justify-between transform translate-x-full transition-transform duration-300">
+        <div>
+          <div class="flex items-center justify-between pb-5 border-b border-white/10">
+            <div class="flex items-baseline gap-2">
+              <span class="font-display text-base font-bold text-white">COSMOS</span>
+              <span class="signature-aleph text-base">By Aleph</span>
+            </div>
+            <button id="mobile-drawer-close" type="button" class="p-2 text-slate-400 hover:text-white" aria-label="Cerrar menú">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+            </button>
+          </div>
+          <div class="py-6 space-y-2 text-xs font-medium">
+            <a href="#planetario" class="mobile-os-link block py-3 px-3 rounded-lg bg-white/5 text-white">01. Sistema Orbital</a>
+            <a href="#sandbox" class="mobile-os-link block py-3 px-3 rounded-lg text-slate-400 hover:text-white">02. Dinámica Gravitacional</a>
+            <a href="#relatividad" class="mobile-os-link block py-3 px-3 rounded-lg text-slate-400 hover:text-white">03. Escalas &amp; Relatividad</a>
+            <a href="#atlas" class="mobile-os-link block py-3 px-3 rounded-lg text-slate-400 hover:text-white">04. Enciclopedia Messier / NGC</a>
+          </div>
+        </div>
+        <div class="text-[11px] font-mono text-slate-500">
+          Observatorio &amp; Archivo Astrofísico
+        </div>
+      </div>
+
+      <!-- =====================================================================
+           CONTENIDO PRINCIPAL
+           ===================================================================== -->
+      <main class="px-4 sm:px-8 py-10 space-y-20 max-w-[1380px] w-full mx-auto">
+
+        <!-- ===================================================================
+             SECCIÓN 01: SISTEMA ORBITAL & SINGULARIDAD SAGITARIO A*
+             =================================================================== -->
+        <section id="planetario" class="space-y-6 reveal-init">
+          
+          <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b border-white/10 pb-6">
+            <div>
+              <span class="font-tech text-xs uppercase tracking-[0.25em] text-slate-400 block mb-1">
+                01 // MECÁNICA CELESTE &amp; HORIZONTE DE SUCESOS
+              </span>
+              <h1 class="font-display text-2xl sm:text-3xl font-bold text-white tracking-wide">
+                Simulador Orbital &amp; Centro Galáctico
+              </h1>
+              <p class="text-xs sm:text-sm text-slate-400 mt-2 max-w-2xl leading-relaxed">
+                Representación dinámica del Sistema Solar y del entorno relativista del agujero negro supermasivo Sagitario A*. Selecciona un cuerpo celeste para consultar su ficha física.
+              </p>
+            </div>
+
+            <!-- Conmutador Sistema Solar vs Agujero Negro Sagitario A* -->
+            <div class="flex items-center gap-2 shrink-0">
+              <button 
+                type="button" 
+                data-system="solar"
+                class="orrery-system-btn px-4 py-2 rounded-lg border border-white bg-white text-[#04060A] text-xs font-semibold transition-all"
+              >
+                Sistema Solar
+              </button>
+
+              <button 
+                type="button" 
+                data-system="blackhole"
+                class="orrery-system-btn px-4 py-2 rounded-lg border border-white/15 bg-transparent text-slate-300 hover:border-amber-400/60 text-xs font-semibold transition-all flex items-center gap-2"
+              >
+                <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+                <span>Agujero Negro Sagitario A*</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Selector Rápido de Cuerpos -->
+          <div id="orrery-body-pills" class="flex items-center gap-2 overflow-x-auto pb-2"></div>
+
+          <!-- Lienzo (7 cols) + Ficha Enciclopédica (5 cols) -->
+          <div class="grid grid-cols-1 xl:grid-cols-12 gap-6 items-stretch">
+            
+            <div class="xl:col-span-7 hud-panel rounded-2xl p-2 flex flex-col justify-between">
+              <div class="sim-canvas-wrapper">
+                <canvas id="orrery-canvas" class="w-full h-full block cursor-grab active:cursor-grabbing"></canvas>
+
+                <!-- Controles de Cámara -->
+                <div class="absolute top-3 right-3 flex items-center gap-1.5">
+                  <button id="orrery-zoom-in" type="button" class="p-2 rounded-lg bg-black/80 hover:bg-white/10 border border-white/10 text-white" aria-label="Acercar">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  </button>
+                  <button id="orrery-zoom-out" type="button" class="p-2 rounded-lg bg-black/80 hover:bg-white/10 border border-white/10 text-white" aria-label="Alejar">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  </button>
+                  <button id="orrery-reset-cam" type="button" class="p-2 rounded-lg bg-black/80 hover:bg-white/10 border border-white/10 text-slate-300" aria-label="Centrar">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/></svg>
+                  </button>
+                </div>
+
+                <!-- Controles de Escala Temporal -->
+                <div class="absolute bottom-3 left-3 right-3 flex flex-wrap items-center justify-between gap-2 pointer-events-none">
+                  <div class="flex items-center gap-1 p-1 rounded-lg bg-black/85 backdrop-blur-md border border-white/10 pointer-events-auto">
+                    <button type="button" data-speed="0" class="orrery-speed-btn px-2.5 py-1 rounded text-[11px] font-mono text-slate-400 hover:text-white">Pausa</button>
+                    <button type="button" data-speed="0.5" class="orrery-speed-btn px-2.5 py-1 rounded text-[11px] font-mono text-slate-400 hover:text-white">0.5x</button>
+                    <button type="button" data-speed="1" class="orrery-speed-btn px-2.5 py-1 rounded text-[11px] font-mono bg-white text-[#04060A] font-bold">1x</button>
+                    <button type="button" data-speed="4" class="orrery-speed-btn px-2.5 py-1 rounded text-[11px] font-mono text-slate-400 hover:text-white">4x</button>
+                    <button type="button" data-speed="12" class="orrery-speed-btn px-2.5 py-1 rounded text-[11px] font-mono text-slate-400 hover:text-white">12x</button>
+                  </div>
+
+                  <button id="orrery-toggle-orbits" type="button" class="px-3 py-1.5 rounded-lg bg-black/85 backdrop-blur-md border border-white/10 text-[11px] font-mono text-white pointer-events-auto">
+                    Trazado Orbital
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Ficha Enciclopédica Sobria (Sin saturación de cajas) -->
+            <div class="xl:col-span-5 hud-panel rounded-2xl p-6 sm:p-8 flex flex-col justify-between">
+              <div class="space-y-6">
+                <div class="flex items-center justify-between gap-4 border-b border-white/10 pb-5">
+                  <div>
+                    <span id="insp-type" class="font-mono text-[11px] uppercase tracking-wider text-amber-400 block mb-1">
+                      Planeta terrestre oceánico
+                    </span>
+                    <h2 id="insp-name" class="font-display text-2xl font-bold text-white tracking-wide">
+                      Tierra
+                    </h2>
+                  </div>
+                  <div id="insp-sphere-preview" class="w-20 h-20 celestial-sphere shrink-0"></div>
+                </div>
+
+                <!-- Descripción estilo Wikipedia / Enciclopedia -->
+                <p id="insp-desc" class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                  La Tierra es el mayor de los planetas terrestres y el quinto en tamaño general. Alrededor del 71% de su superficie está cubierta por océanos de agua salada.
+                </p>
+
+                <!-- Tabla Técnica de 4 Datos Clave -->
+                <div class="grid grid-cols-2 gap-4 py-4 border-y border-white/10 text-xs">
+                  <div>
+                    <span class="block text-[10px] font-mono uppercase text-slate-500">Distancia / Ubicación</span>
+                    <span id="insp-distance" class="font-mono text-slate-100 font-medium mt-0.5 block">1,00 UA (149,6M km)</span>
+                  </div>
+                  <div>
+                    <span class="block text-[10px] font-mono uppercase text-slate-500">Velocidad Orbital</span>
+                    <span id="insp-velocity" class="font-mono text-slate-100 font-medium mt-0.5 block">29,78 km/s</span>
+                  </div>
+                  <div>
+                    <span class="block text-[10px] font-mono uppercase text-slate-500">Gravedad Superficial</span>
+                    <span id="insp-gravity" class="font-mono text-slate-100 font-medium mt-0.5 block">9,807 m/s²</span>
+                  </div>
+                  <div>
+                    <span class="block text-[10px] font-mono uppercase text-slate-500">Temperatura</span>
+                    <span id="insp-temp" class="font-mono text-slate-100 font-medium mt-0.5 block">14,8 °C</span>
+                  </div>
+                </div>
+
+                <!-- Nota de Composición -->
+                <div>
+                  <span class="block text-[10px] font-mono uppercase tracking-wider text-slate-500 mb-1.5">
+                    Composición Química &amp; Estructura
+                  </span>
+                  <p id="insp-composition-note" class="text-xs text-slate-400 leading-relaxed">
+                    Atmósfera: 78,08% Nitrógeno (N₂), 20,95% Oxígeno (O₂), 0,93% Argón y ~0,04% Dióxido de carbono.
+                  </p>
+                </div>
+              </div>
+
+              <div class="pt-5 mt-6 border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-slate-500">
+                <span>Catálogo IAU / JPL</span>
+                <span>Época J2000.0</span>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ===================================================================
+             SECCIÓN 02: LABORATORIO DE DINÁMICA GRAVITACIONAL N-CUERPOS
+             =================================================================== -->
+        <section id="sandbox" class="space-y-6 reveal-init">
+          
+          <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-6">
+            <div>
+              <span class="font-tech text-xs uppercase tracking-[0.25em] text-slate-400 block mb-1">
+                02 // INTEGRACIÓN NUMÉRICA DE PROBLEMA DE N-CUERPOS
+              </span>
+              <h2 class="font-display text-2xl sm:text-3xl font-bold text-white tracking-wide">
+                Simulador de Campo Gravitacional
+              </h2>
+              <p class="text-xs sm:text-sm text-slate-400 mt-2 max-w-2xl leading-relaxed">
+                Modelado interactivo de trayectorias orbitales bajo la ley de gravitación universal. Pulsa y arrastra sobre el lienzo para definir el vector de velocidad inicial ($v_0$) de un nuevo cuerpo en órbita.
+              </p>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-2">
+              <button type="button" data-preset="harmonic" class="sandbox-preset-btn px-3.5 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium text-slate-200 transition-colors">
+                Órbitas Keplerianas
+              </button>
+              <button type="button" data-preset="chaotic" class="sandbox-preset-btn px-3.5 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium text-slate-200 transition-colors">
+                Sistema Perturbado
+              </button>
+              <button type="button" data-preset="blackhole" class="sandbox-preset-btn px-3.5 py-2 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-xs font-medium text-amber-300 transition-colors">
+                Singularidad de Schwarzschild
+              </button>
+              <button id="sandbox-clear-btn" type="button" class="px-3.5 py-2 rounded-lg bg-white/[0.02] hover:bg-white/10 border border-white/10 text-xs text-slate-400 hover:text-white transition-colors">
+                Reiniciar
+              </button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+            
+            <div class="lg:col-span-8 hud-panel rounded-2xl p-2">
+              <div class="sim-canvas-wrapper">
+                <canvas id="gravity-canvas" class="w-full h-full block cursor-crosshair"></canvas>
+                <div class="absolute top-3 left-3 px-3 py-1.5 rounded-lg bg-black/80 backdrop-blur-md border border-white/10 text-[11px] font-mono text-slate-300 pointer-events-none">
+                  Arrastra en el espacio para asignar vector de velocidad inicial
+                </div>
+              </div>
+            </div>
+
+            <div class="lg:col-span-4 hud-panel rounded-2xl p-6 sm:p-7 flex flex-col justify-between space-y-6">
+              <div class="space-y-6">
+                <div>
+                  <span class="font-mono text-[10px] uppercase tracking-widest text-slate-400 block">
+                    CONDICIONES DE CONTORNO
+                  </span>
+                  <h3 class="font-display text-lg font-bold text-white mt-1">
+                    Parámetros del Atractor
+                  </h3>
+                </div>
+
+                <!-- Control de Masa Central -->
+                <div class="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-3">
+                  <div class="flex items-center justify-between text-xs">
+                    <span class="text-slate-400">Masa Central:</span>
+                    <span id="sandbox-mass-label" class="font-mono font-semibold text-white">1,0 M☉ (Estrella tipo G)</span>
+                  </div>
+                  <input 
+                    type="range" 
+                    id="sandbox-mass-slider" 
+                    min="800" 
+                    max="4500" 
+                    step="100" 
+                    value="1800"
+                    class="space-slider"
+                  >
+                  <div class="flex justify-between text-[10px] font-mono text-slate-500">
+                    <span>0,5 M☉</span>
+                    <span>1,0 M☉</span>
+                    <span>2,2 M☉</span>
+                    <span>Agujero Negro</span>
+                  </div>
+                </div>
+
+                <!-- Masa del Cuerpo Inyectado -->
+                <div>
+                  <label class="block text-[10px] font-mono uppercase tracking-wider text-slate-400 mb-2.5">
+                    Clase de Cuerpo Orbital:
+                  </label>
+                  <div class="grid grid-cols-3 gap-2">
+                    <button type="button" data-type="rocky" class="sandbox-type-btn p-3 rounded-lg border border-white bg-white/10 text-white text-center transition-all">
+                      <span class="text-xs font-medium block">Terrestre</span>
+                      <span class="text-[10px] text-slate-400 font-mono">m = 12</span>
+                    </button>
+
+                    <button type="button" data-type="gas" class="sandbox-type-btn p-3 rounded-lg border border-white/10 text-slate-400 hover:text-white text-center transition-all">
+                      <span class="text-xs font-medium block">Joviano</span>
+                      <span class="text-[10px] text-slate-400 font-mono">m = 45</span>
+                    </button>
+
+                    <button type="button" data-type="comet" class="sandbox-type-btn p-3 rounded-lg border border-white/10 text-slate-400 hover:text-white text-center transition-all">
+                      <span class="text-xs font-medium block">Planetésimo</span>
+                      <span class="text-[10px] text-slate-400 font-mono">m = 4</span>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3 pt-2">
+                  <div class="p-3.5 rounded-xl bg-white/[0.02] border border-white/10">
+                    <span class="block text-[10px] font-mono uppercase text-slate-500">Cuerpos Activos</span>
+                    <span id="sandbox-body-count" class="font-mono text-xl font-semibold text-white mt-1 block">4</span>
+                  </div>
+                  <div class="p-3.5 rounded-xl bg-white/[0.02] border border-white/10">
+                    <span class="block text-[10px] font-mono uppercase text-slate-500">Eventos de Acreción</span>
+                    <span id="sandbox-collision-count" class="font-mono text-xl font-semibold text-amber-400 mt-1 block">0</span>
+                  </div>
+                </div>
+              </div>
+
+              <p class="text-[11px] text-slate-400 leading-relaxed border-t border-white/10 pt-4">
+                Al superar el umbral de masa crítica, el atractor central colapsa en una singularidad rodeada por un disco de acreción relativista.
+              </p>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ===================================================================
+             SECCIÓN 03: ESCALAS ASTRONÓMICAS & MÉTRICA DE SCHWARZSCHILD
+             =================================================================== -->
+        <section id="relatividad" class="space-y-6 reveal-init">
+          
+          <div class="border-b border-white/10 pb-6">
+            <span class="font-tech text-xs uppercase tracking-[0.25em] text-slate-400 block mb-1">
+              03 // PROPORCIONES FÍSICAS &amp; DILATACIÓN TEMPORAL GRAVITATORIA
+            </span>
+            <h2 class="font-display text-2xl sm:text-3xl font-bold text-white tracking-wide">
+              Comparativa de Escalas &amp; Relatividad General
+            </h2>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+            
+            <!-- Comparador Proporcional de Diámetros -->
+            <div class="lg:col-span-5 hud-panel rounded-2xl p-6 sm:p-7 flex flex-col justify-between space-y-6">
+              <div>
+                <h3 class="font-display text-base font-bold text-white mb-1">Relación de Diámetros Ecuatoriales</h3>
+                <p class="text-xs text-slate-400 mb-5">
+                  Comparación visual directa entre cuerpos planetarios, estelares y el radio de Schwarzschild de Sagitario A*.
+                </p>
+
+                <div class="grid grid-cols-2 gap-3 mb-6">
+                  <div>
+                    <label for="scale-select-a" class="block text-[10px] font-mono uppercase text-slate-400 mb-1">Cuerpo A</label>
+                    <select id="scale-select-a" class="w-full px-3 py-2 rounded-lg bg-[#090D16] border border-white/15 text-xs text-white focus:outline-none focus:border-white">
+                      <option value="moon">Luna (Tierra I)</option>
+                      <option value="mars">Marte</option>
+                      <option value="earth" selected>Tierra</option>
+                      <option value="neptune">Neptuno</option>
+                      <option value="jupiter">Júpiter</option>
+                      <option value="sun">Sol</option>
+                      <option value="sirius">Sirio A</option>
+                      <option value="sgrA">Sagitario A* (2 Rₛ)</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label for="scale-select-b" class="block text-[10px] font-mono uppercase text-slate-400 mb-1">Cuerpo B</label>
+                    <select id="scale-select-b" class="w-full px-3 py-2 rounded-lg bg-[#090D16] border border-white/15 text-xs text-white focus:outline-none focus:border-white">
+                      <option value="moon">Luna (Tierra I)</option>
+                      <option value="mars">Marte</option>
+                      <option value="earth">Tierra</option>
+                      <option value="neptune">Neptuno</option>
+                      <option value="jupiter" selected>Júpiter</option>
+                      <option value="sun">Sol</option>
+                      <option value="sirius">Sirio A</option>
+                      <option value="sgrA">Sagitario A* (2 Rₛ)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="h-56 rounded-xl bg-black/60 border border-white/10 flex items-center justify-around p-4 overflow-hidden">
+                  <div class="flex flex-col items-center gap-3">
+                    <div id="scale-sphere-a" class="rounded-full transition-all duration-500"></div>
+                    <div class="text-center">
+                      <span id="scale-name-a" class="block text-xs font-medium text-white">Tierra</span>
+                      <span id="scale-diam-a" class="block text-[11px] font-mono text-slate-400">12.742 km</span>
+                    </div>
+                  </div>
+
+                  <div class="flex flex-col items-center gap-3">
+                    <div id="scale-sphere-b" class="rounded-full transition-all duration-500"></div>
+                    <div class="text-center">
+                      <span id="scale-name-b" class="block text-xs font-medium text-white">Júpiter</span>
+                      <span id="scale-diam-b" class="block text-[11px] font-mono text-slate-400">139.820 km</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div id="scale-ratio-summary" class="p-3.5 rounded-xl bg-white/[0.03] border border-white/10 text-xs font-mono text-slate-300 text-center">
+                Relación de escala: Júpiter posee un diámetro 11,0 veces mayor que el de Tierra.
+              </div>
+            </div>
+
+            <!-- Tabla Comparativa de Campos Gravitacionales y Dilatación Temporal -->
+            <div class="lg:col-span-7 hud-panel rounded-2xl p-6 sm:p-7 flex flex-col justify-between space-y-5">
+              <div>
+                <h3 class="font-display text-base font-bold text-white mb-1">
+                  Potencial Gravitatorio &amp; Métrica de Schwarzschild
+                </h3>
+                <p class="text-xs text-slate-400 mb-5 leading-relaxed">
+                  De acuerdo con la relatividad general, el paso del tiempo propio ($\tau$) se ralentiza en presencia de campos gravitatorios intensos según la relación $\Delta t_\infty = \Delta \tau / \sqrt{1 - 2GM/(rc^2)}$.
+                </p>
+
+                <div id="relativity-cards-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <!-- Renderizado por atlas-relativity.js -->
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ===================================================================
+             SECCIÓN 04: ENCICLOPEDIA DEL ESPACIO PROFUNDO (CATÁLOGO MESSIER / NGC)
+             =================================================================== -->
+        <section id="atlas" class="space-y-8 reveal-init">
+          
+          <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b border-white/10 pb-6">
+            <div>
+              <span class="font-tech text-xs uppercase tracking-[0.25em] text-slate-400 block mb-1">
+                04 // ARCHIVO DE OBSERVACIÓN ASTRONÓMICA (JWST / HST / EHT)
+              </span>
+              <h2 class="font-display text-2xl sm:text-3xl font-bold text-white tracking-wide">
+                Enciclopedia de Objetos de Espacio Profundo
+              </h2>
+              <p class="text-xs sm:text-sm text-slate-400 mt-2 max-w-2xl leading-relaxed">
+                Registro documental de nebulosas, singularidades supermasivas y cuerpos planetarios con imágenes oficiales de archivo del Telescopio Espacial James Webb, Hubble y el Event Horizon Telescope.
+              </p>
+            </div>
+
+            <!-- Buscador + Filtros -->
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+              <div class="relative">
+                <input 
+                  type="text" 
+                  id="atlas-search-input" 
+                  placeholder="Filtrar por nombre o NGC..."
+                  class="w-full sm:w-56 pl-9 pr-4 py-2 rounded-lg bg-[#090D16] border border-white/15 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-white"
+                >
+                <svg class="w-4 h-4 text-slate-500 absolute left-3 top-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="11" cy="11" r="8"/>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+              </div>
+
+              <div class="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
+                <button type="button" data-filter="todos" class="atlas-filter-btn px-3.5 py-2 rounded-lg text-xs bg-white text-[#04060A] font-semibold shrink-0">Todos</button>
+                <button type="button" data-filter="agujero-negro" class="atlas-filter-btn px-3.5 py-2 rounded-lg text-xs bg-transparent text-slate-400 hover:text-white shrink-0">Agujeros Negros</button>
+                <button type="button" data-filter="nebulosa" class="atlas-filter-btn px-3.5 py-2 rounded-lg text-xs bg-transparent text-slate-400 hover:text-white shrink-0">Nebulosas</button>
+                <button type="button" data-filter="planeta" class="atlas-filter-btn px-3.5 py-2 rounded-lg text-xs bg-transparent text-slate-400 hover:text-white shrink-0">Sistema Planetario</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Grid del Archivo Enciclopédico -->
+          <div id="atlas-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+        </section>
+
+      </main>
+
+      <!-- Footer Sobrio con Firma By Aleph -->
+      <footer class="mt-20 border-t border-white/10 bg-[#04060A] py-10 px-4 sm:px-8 text-xs text-slate-500">
+        <div class="max-w-[1380px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="flex items-baseline gap-2.5">
+            <span class="font-display text-sm font-bold tracking-widest text-white">COSMOS</span>
+            <span class="signature-aleph text-base">By Aleph</span>
+            <span class="text-slate-600 ml-2">— Archivo &amp; Observatorio Astrofísico</span>
+          </div>
+          <p class="font-mono text-[11px] text-slate-500">
+            Imágenes de dominio público: NASA / ESA / CSA / Event Horizon Telescope.
+          </p>
+        </div>
+      </footer>
+
+    </div>
+
+  </div>
+
+  <!-- =========================================================================
+       BARRA INFERIOR PARA MÓVILES (<1024px)
+       ========================================================================= -->
+  <nav class="lg:hidden fixed bottom-0 left-0 right-0 z-40 mobile-space-bar flex items-center justify-around py-2 px-2 shadow-2xl" aria-label="Navegación móvil">
+    <a href="#planetario" class="os-nav-link flex flex-col items-center gap-1 py-1 px-3 rounded-lg text-white">
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <circle cx="12" cy="12" r="3"/>
+        <circle cx="12" cy="12" r="9" stroke-dasharray="3 3"/>
+      </svg>
+      <span class="text-[10px] font-medium">Órbitas</span>
+    </a>
+
+    <a href="#sandbox" class="os-nav-link flex flex-col items-center gap-1 py-1 px-3 rounded-lg text-slate-400">
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M12 2v20M2 12h20"/>
+        <circle cx="12" cy="12" r="6"/>
+      </svg>
+      <span class="text-[10px] font-medium">Gravedad</span>
+    </a>
+
+    <a href="#relatividad" class="os-nav-link flex flex-col items-center gap-1 py-1 px-3 rounded-lg text-slate-400">
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <circle cx="7" cy="12" r="3"/>
+        <circle cx="16" cy="12" r="6"/>
+      </svg>
+      <span class="text-[10px] font-medium">Relatividad</span>
+    </a>
+
+    <a href="#atlas" class="os-nav-link flex flex-col items-center gap-1 py-1 px-3 rounded-lg text-slate-400">
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <circle cx="12" cy="12" r="9"/>
+        <path d="M12 3a9 9 0 0 0 0 18"/>
+      </svg>
+      <span class="text-[10px] font-medium">Enciclopedia</span>
+    </a>
+  </nav>
+
+  <!-- Modal de Artículo Enciclopédico -->
+  <div id="atlas-modal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md items-center justify-center p-4">
+    <div class="hud-panel rounded-2xl max-w-2xl w-full p-6 sm:p-8 relative max-h-[90vh] overflow-y-auto border border-white/15">
+      <button 
+        type="button" 
+        onclick="closeAtlasModal()" 
+        class="absolute top-5 right-5 p-2 rounded-full bg-black/80 text-slate-300 hover:text-white border border-white/15"
+        aria-label="Cerrar artículo"
+      >
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+      <div id="atlas-modal-body"></div>
+    </div>
+  </div>
+
+  <!-- Contenedor de Notificaciones Toast -->
+  <div id="toast-container"></div>
+
+  <!-- Scripts Modulares -->
+  <script src="js/starfield.js"></script>
+  <script src="js/orrery.js"></script>
+  <script src="js/gravity-sandbox.js"></script>
+  <script src="js/atlas-relativity.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
