@@ -241,7 +241,7 @@ function initScaleAndRelativity() {
       sphereA.style.width = `${sizeAPx}px`;
       sphereA.style.height = `${sizeAPx}px`;
       if (bodyA.isBlackHole) {
-        sphereA.style.background = "url('images/blackhole-lensing.jpg') center/cover no-repeat";
+        sphereA.style.background = "#04060A url('images/sgr-a.png') center center / 118% no-repeat";
         sphereA.style.boxShadow = `0 0 28px rgba(245, 158, 11, 0.75), inset 0 0 10px rgba(0,0,0,0.9)`;
       } else {
         sphereA.style.background = bodyA.colorGrad;
@@ -253,7 +253,7 @@ function initScaleAndRelativity() {
       sphereB.style.width = `${sizeBPx}px`;
       sphereB.style.height = `${sizeBPx}px`;
       if (bodyB.isBlackHole) {
-        sphereB.style.background = "url('images/blackhole-lensing.jpg') center/cover no-repeat";
+        sphereB.style.background = "#04060A url('images/sgr-a.png') center center / 118% no-repeat";
         sphereB.style.boxShadow = `0 0 28px rgba(245, 158, 11, 0.75), inset 0 0 10px rgba(0,0,0,0.9)`;
       } else {
         sphereB.style.background = bodyB.colorGrad;
