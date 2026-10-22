@@ -41,7 +41,8 @@ section[id] {
 }
 
 .font-display {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  letter-spacing: -0.025em;
 }
 
 /* Scrollbar Minimalista Corporativa */

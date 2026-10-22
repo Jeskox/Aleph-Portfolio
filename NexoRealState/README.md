@@ -17,9 +17,9 @@
 - **Showcase de Obras & Planos Arquitectónicos**:
   - Filtro dinámico en tiempo real por tipología (Residencial, Comercial, Rehabilitación, Passivhaus).
   - Modal inmersivo con planos vectoriales limpios SVG, orientación solar, materiales y sistemas de climatización.
-- **Identidad Visual "Concreto Arquitectónico & Ocre Cálido"**:
-  - Fondo gris técnico sutil `#F8F9FA` con retícula blueprint, contrastes en grafito ébano `#121316` y acentos en ocre tostado `#D97736`.
-  - Tipografía geométrica de alto impacto: Google Fonts `Syne` (títulos y acentos de marca) + `Plus Jakarta Sans` (cuerpo de texto técnico).
+- **Identidad Visual Corporativa "Azul Marino & Hielo Prime"**:
+  - Paleta sobria y prestigiosa: Azul marino institucional `#0F1E36`, superficie blanca, fondo azul hielo suave `#F0F4F8` y acentos en azul zafiro `#0284C7`.
+  - Tipografía corporativa de alta seriedad: Google Fonts `Plus Jakarta Sans` con proporciones equilibradas y tracking optimizado para títulos y textos técnicos + `Cormorant Garamond` para la firma de autor By Aleph.
 - **Regla Estricta: Cero Emojis**:
   - 100% de la iconografía está construida mediante vectores SVG precisos (compases, lamas bioclimáticas, planos de planta, estrellas de valoración y sellos de certificación).
 - **Metodología en Fases, Testimonios y Acordeón FAQ**:
