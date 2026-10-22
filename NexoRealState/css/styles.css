@@ -33,14 +33,11 @@ body {
   overflow-x: hidden;
   width: 100%;
   position: relative;
-  /* Espacio inferior en móvil para que la Quick-Action Bar no tape el contenido */
-  padding-bottom: 74px;
+  padding-bottom: 0;
 }
 
-@media (min-width: 768px) {
-  body {
-    padding-bottom: 0;
-  }
+section[id] {
+  scroll-margin-top: 5.25rem;
 }
 
 .font-display {
@@ -81,26 +78,21 @@ body {
   transform: translateY(0);
 }
 
-/* Enlaces de Navegación de Subpáginas */
-.subpage-nav-link {
+/* Enlaces de Navegación de Secciones */
+.nav-section-link {
   position: relative;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-section-link.active {
+  background-color: #FFFFFF !important;
+  color: var(--color-navy) !important;
+  box-shadow: 0 1px 3px rgba(15, 30, 54, 0.08) !important;
+}
+
+/* Selector de pestañas en modal legal */
+.legal-tab-btn {
   transition: all 0.2s ease;
-}
-
-.subpage-nav-link.active {
-  color: var(--color-azure) !important;
-  font-weight: 700;
-}
-
-.subpage-nav-link.active::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background-color: var(--color-azure);
-  border-radius: 9999px;
 }
 
 /* Quick-Action Bar Móvil */

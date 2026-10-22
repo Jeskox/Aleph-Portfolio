@@ -1,17 +1,18 @@
 /**
- * NEXO Real Estate — Script Principal de Interacción & Arquitectura de Subpáginas
- * Sistema de enrutamiento por pestañas, menú móvil, acordeón FAQ y notificaciones Toast
+ * NEXO Real Estate — Script Principal de Interacción & Arquitectura Corporativa
+ * Navegación suave entre secciones, modal legal RGPD, acordeón FAQ, menú móvil y Chatbot
  * 0 Emojis — 100% Vectores SVG
  */
 
 document.addEventListener("DOMContentLoaded", () => {
-  initSubpageRouter();
+  initSectionNav();
   initMobileDrawer();
   initFaqAccordion();
   initContactForm();
   initPropertySearchForm();
   initScrollAnimations();
   initModalListeners();
+  initLegalModalListeners();
   initChatbotWidget();
 
   // Inicializar módulos de componentes
@@ -20,93 +21,104 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /* ==========================================================================
-   1. Sistema de Enrutamiento por Pestañas / Subpáginas (SPA Dinámica)
+   1. Sistema de Navegación por Secciones & Scroll Suave
    ========================================================================== */
-function initSubpageRouter() {
-  const subpages = document.querySelectorAll(".subpage");
-  const navLinks = document.querySelectorAll("[data-subpage-target]");
-  const quickBarItems = document.querySelectorAll(".quick-bar-item[data-subpage-target]");
+function initSectionNav() {
+  const navLinks = document.querySelectorAll(".nav-section-link");
+  const sections = document.querySelectorAll("section[id]");
+  const headerHeight = 84;
 
-  function switchSubpage(targetId) {
+  function scrollToSection(targetId) {
     if (!targetId) targetId = "inicio";
     targetId = targetId.replace(/^#/, "");
 
-    const targetSubpage = document.getElementById(`subpage-${targetId}`);
-    if (!targetSubpage) return;
+    const targetEl = document.getElementById(targetId);
+    if (!targetEl) return;
 
-    // Ocultar todas las subpáginas y activar la deseada
-    subpages.forEach(sp => {
-      sp.classList.remove("active");
-      sp.classList.add("hidden");
+    const elementPosition = targetEl.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
+
+    window.scrollTo({
+      top: Math.max(0, offsetPosition),
+      behavior: "smooth"
     });
 
-    targetSubpage.classList.remove("hidden");
-    requestAnimationFrame(() => {
-      targetSubpage.classList.add("active");
-    });
-
-    // Actualizar estilos en navegación de escritorio
-    navLinks.forEach(link => {
-      const linkTarget = link.getAttribute("data-subpage-target");
-      if (linkTarget === targetId) {
-        link.classList.add("active");
-      } else {
-        link.classList.remove("active");
-      }
-    });
-
-    // Actualizar enlaces en la barra rápida inferior móvil
-    quickBarItems.forEach(item => {
-      const itemTarget = item.getAttribute("data-subpage-target");
-      if (itemTarget === targetId) {
-        item.classList.add("active", "text-[#0284C7]");
-        item.classList.remove("text-gray-400");
-      } else {
-        item.classList.remove("active", "text-[#0284C7]");
-        item.classList.add("text-gray-400");
-      }
-    });
-
-    // Sincronizar hash en la URL sin saltos bruscos
     if (window.location.hash !== `#${targetId}`) {
       history.replaceState(null, "", `#${targetId}`);
     }
 
-    // Desplazar arriba suavemente
-    window.scrollTo({ top: 0, behavior: "smooth" });
-
-    // Refrescar slider de Home Staging si estamos en la pestaña servicios
-    if (targetId === "servicios" && window.refreshBeforeAfter) {
-      setTimeout(window.refreshBeforeAfter, 60);
-    }
-
-    // Refrescar observador de animaciones
-    if (window.observeNewElements) {
-      window.observeNewElements();
-    }
+    updateActiveNavLink(targetId);
   }
 
-  // Escuchar clics en cualquier elemento con data-subpage-target
+  function updateActiveNavLink(activeId) {
+    navLinks.forEach(link => {
+      const href = link.getAttribute("href");
+      if (href === `#${activeId}`) {
+        link.classList.add("active", "text-navy", "bg-white", "shadow-sm");
+        link.classList.remove("text-navy-muted");
+      } else {
+        link.classList.remove("active", "text-navy", "bg-white", "shadow-sm");
+        link.classList.add("text-navy-muted");
+      }
+    });
+  }
+
+  // Interceptar todos los enlaces ancla internos
   document.addEventListener("click", (e) => {
-    const trigger = e.target.closest("[data-subpage-target]");
-    if (trigger) {
+    const anchor = e.target.closest('a[href^="#"]');
+    if (!anchor) return;
+
+    const href = anchor.getAttribute("href");
+    if (!href || href === "#") return;
+
+    const targetId = href.replace(/^#/, "");
+    const targetEl = document.getElementById(targetId);
+
+    if (targetEl) {
       e.preventDefault();
-      const target = trigger.getAttribute("data-subpage-target");
-      switchSubpage(target);
+      scrollToSection(targetId);
+
+      // Si el drawer móvil está abierto, cerrarlo
+      const drawer = document.getElementById("mobile-drawer");
+      const overlay = document.getElementById("mobile-drawer-overlay");
+      if (drawer && !drawer.classList.contains("translate-x-full")) {
+        drawer.classList.add("translate-x-full");
+        if (overlay) overlay.classList.add("hidden");
+        document.body.style.overflow = "";
+      }
     }
   });
 
-  // Escuchar cambios de hash (historial del navegador)
-  window.addEventListener("hashchange", () => {
-    const hash = window.location.hash.replace(/^#/, "");
-    if (hash) switchSubpage(hash);
-  });
+  // Observador de scroll para resaltar la sección activa en el menú
+  let scrollTimeout;
+  window.addEventListener("scroll", () => {
+    if (scrollTimeout) return;
+    scrollTimeout = setTimeout(() => {
+      scrollTimeout = null;
+      let currentSectionId = "inicio";
+      const scrollPos = window.pageYOffset + headerHeight + 50;
 
-  // Cargar subpágina inicial
-  const initialHash = window.location.hash.replace(/^#/, "") || "inicio";
-  switchSubpage(initialHash);
+      sections.forEach(sec => {
+        const top = sec.offsetTop;
+        const height = sec.offsetHeight;
+        if (scrollPos >= top && scrollPos < top + height) {
+          currentSectionId = sec.getAttribute("id");
+        }
+      });
 
-  window.switchSubpage = switchSubpage;
+      updateActiveNavLink(currentSectionId);
+    }, 80);
+  }, { passive: true });
+
+  // Exponer para compatibilidad con módulos anteriores y llamadas externas
+  window.scrollToSection = scrollToSection;
+  window.switchSubpage = scrollToSection;
+
+  // Manejar hash inicial al cargar
+  if (window.location.hash) {
+    const initialId = window.location.hash.replace(/^#/, "");
+    setTimeout(() => scrollToSection(initialId), 150);
+  }
 }
 
 /* ==========================================================================
@@ -121,18 +133,16 @@ function initPropertySearchForm() {
     const typeSelect = document.getElementById("search-type");
     const selectedType = typeSelect ? typeSelect.value : "todos";
 
-    // Cambiar a la subpágina de propiedades
-    if (window.switchSubpage) {
-      window.switchSubpage("propiedades");
+    if (window.scrollToSection) {
+      window.scrollToSection("propiedades");
     }
 
-    // Simular clic en el botón de filtro correspondiente
     setTimeout(() => {
       const filterBtn = document.querySelector(`.property-filter-btn[data-filter="${selectedType}"]`);
       if (filterBtn) {
         filterBtn.click();
       }
-    }, 150);
+    }, 250);
   });
 }
 
@@ -216,7 +226,7 @@ function initMobileDrawer() {
   }
 
   toggleBtn.addEventListener("click", openDrawer);
-  closeBtn?.addEventListener("click", closeDrawer);
+  if (closeBtn) closeBtn.addEventListener("click", closeDrawer);
   overlay.addEventListener("click", closeDrawer);
 
   links.forEach(l => l.addEventListener("click", closeDrawer));
@@ -234,7 +244,7 @@ function initFaqAccordion() {
       const icon = trigger.querySelector(".faq-icon");
       const isOpen = !content.classList.contains("hidden");
 
-      // Cerrar otros acordeones
+      // Cerrar otros acordeones para mantener orden ejecutivo
       items.forEach(otherTrigger => {
         if (otherTrigger !== trigger) {
           otherTrigger.nextElementSibling.classList.add("hidden");
@@ -264,12 +274,24 @@ function initContactForm() {
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
+
+    const privacyCheck = document.getElementById("contact-privacy-check");
+    if (privacyCheck && !privacyCheck.checked) {
+      showToast(
+        "Consentimiento Requerido",
+        "Por favor, acepte la política de privacidad antes de enviar la solicitud.",
+        "info"
+      );
+      privacyCheck.focus();
+      return;
+    }
+
     const submitBtn = form.querySelector("button[type='submit']");
     const originalText = submitBtn.innerHTML;
 
     submitBtn.disabled = true;
     submitBtn.innerHTML = `
-      <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+      <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline-block" fill="none" viewBox="0 0 24 24">
         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
       </svg>
@@ -282,7 +304,7 @@ function initContactForm() {
       submitBtn.innerHTML = originalText;
       showToast(
         "Solicitud Recibida con Éxito",
-        "Un asesor inmobiliario de NEXO contactará contigo en menos de 24h para coordinar la visita o tasación.",
+        "Un asesor patrimonial senior de NEXO se pondrá en contacto contigo en menos de 4 horas hábiles.",
         "success"
       );
     }, 1200);
@@ -290,7 +312,77 @@ function initContactForm() {
 }
 
 /* ==========================================================================
-   7. Escuchadores de Cierre para el Modal
+   7. Modal de Documentación Legal Ficticia (RGPD, Términos, Cookies)
+   ========================================================================== */
+function switchLegalTab(tabId) {
+  const buttons = document.querySelectorAll(".legal-tab-btn");
+  const panes = document.querySelectorAll(".legal-content-pane");
+
+  // Ocultar todos los paneles
+  panes.forEach(pane => pane.classList.add("hidden"));
+
+  // Resetear estilos de botones
+  buttons.forEach(btn => {
+    btn.classList.remove("bg-navy", "text-white");
+    btn.classList.add("bg-canvas", "text-navy-muted");
+  });
+
+  // Activar botón y contenido seleccionado
+  const activeBtn = document.getElementById(`tab-btn-${tabId}`);
+  const activePane = document.getElementById(`legal-content-${tabId}`);
+
+  if (activeBtn) {
+    activeBtn.classList.remove("bg-canvas", "text-navy-muted");
+    activeBtn.classList.add("bg-navy", "text-white");
+  }
+
+  if (activePane) {
+    activePane.classList.remove("hidden");
+  }
+}
+
+function openLegalModal(tabId = "privacy") {
+  const modal = document.getElementById("legal-modal");
+  if (!modal) return;
+
+  switchLegalTab(tabId);
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
+  document.body.style.overflow = "hidden";
+}
+
+function closeLegalModal() {
+  const modal = document.getElementById("legal-modal");
+  if (!modal) return;
+
+  modal.classList.add("hidden");
+  modal.classList.remove("flex");
+  document.body.style.overflow = "";
+}
+
+function initLegalModalListeners() {
+  const modal = document.getElementById("legal-modal");
+  if (!modal) return;
+
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      closeLegalModal();
+    }
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !modal.classList.contains("hidden")) {
+      closeLegalModal();
+    }
+  });
+}
+
+window.openLegalModal = openLegalModal;
+window.closeLegalModal = closeLegalModal;
+window.switchLegalTab = switchLegalTab;
+
+/* ==========================================================================
+   8. Escuchadores de Cierre para el Modal de Propiedades
    ========================================================================== */
 function initModalListeners() {
   const modal = document.getElementById("property-modal");
@@ -310,7 +402,7 @@ function initModalListeners() {
 }
 
 /* ==========================================================================
-   8. Animaciones de Entrada Suave (IntersectionObserver)
+   9. Animaciones de Entrada Suave (IntersectionObserver)
    ========================================================================== */
 function initScrollAnimations() {
   const observer = new IntersectionObserver((entries) => {
@@ -332,8 +424,8 @@ function initScrollAnimations() {
 }
 
 /* ==========================================================================
-   9. Widget Flotante de Chatbot Inmobiliario (Mateo Navarro)
-   Conversación simulada breve y ágil, soporte de chips rápidos y navegación fluida
+   10. Widget Flotante de Concierge Inmobiliario (Mateo Navarro)
+   Conversación simulada ágil, soporte de chips rápidos y navegación fluida
    0 Emojis — 100% SVG
    ========================================================================== */
 function initChatbotWidget() {
@@ -345,7 +437,6 @@ function initChatbotWidget() {
   const input = document.getElementById("chatbot-input");
   const chips = document.querySelectorAll(".chatbot-chip");
   const teaser = document.getElementById("chatbot-teaser");
-  const teaserClose = document.getElementById("chatbot-teaser-close");
 
   if (!toggleBtn || !windowEl || !messagesContainer) return;
 
@@ -464,31 +555,31 @@ function initChatbotWidget() {
       appendMessage(label, true);
 
       if (action === "villas") {
-        replyWithDelay("Perfecto. Te dirijo a nuestro catálogo de chalets y villas exclusivas.", () => {
-          if (window.switchSubpage) {
-            window.switchSubpage("propiedades");
+        replyWithDelay("Perfecto. Le dirijo a nuestra cartera de chalets y villas exclusivas.", () => {
+          if (window.scrollToSection) {
+            window.scrollToSection("propiedades");
             setTimeout(() => {
               const filterBtn = document.querySelector('.property-filter-btn[data-filter="villas"]');
               if (filterBtn) filterBtn.click();
-            }, 150);
+            }, 250);
           }
         });
       } else if (action === "tasacion") {
-        replyWithDelay("Excelente elección. Te abro nuestro formulario de tasación personalizada para valorar tu inmueble.", () => {
-          if (window.switchSubpage) {
-            window.switchSubpage("contacto");
+        replyWithDelay("Excelente decisión. Le sitúo en nuestro formulario de valoración técnica para analizar su activo.", () => {
+          if (window.scrollToSection) {
+            window.scrollToSection("contacto");
           }
         });
       } else if (action === "staging") {
-        replyWithDelay("Con nuestro servicio de Home Staging revalorizamos tu propiedad hasta un 15%. Te enseño la comparativa interactiva.", () => {
-          if (window.switchSubpage) {
-            window.switchSubpage("servicios");
+        replyWithDelay("Con nuestro servicio de Home Staging revalorizamos su propiedad hasta un 15%. Le muestro la comparativa interactiva en servicios.", () => {
+          if (window.scrollToSection) {
+            window.scrollToSection("servicios");
           }
         });
       } else if (action === "contacto") {
-        replyWithDelay("Puedes contactar directamente con nuestro equipo al +34 910 234 567 o agendar una cita en la pestaña de contacto.", () => {
-          if (window.switchSubpage) {
-            window.switchSubpage("contacto");
+        replyWithDelay("Puede contactar directamente con nuestro equipo en Paseo de la Castellana 95 (+34 910 234 567) o remitirnos su consulta.", () => {
+          if (window.scrollToSection) {
+            window.scrollToSection("contacto");
           }
         });
       }
@@ -509,22 +600,26 @@ function initChatbotWidget() {
       let replyText = "";
       let callback = null;
 
-      if (lower.includes("precio") || lower.includes("coste") || lower.includes("cuanto") || lower.includes("vale")) {
-        replyText = "Nuestros inmuebles oscilan entre 430.000 € y 1.850.000 €. ¿Buscas una vivienda habitual o una inversión patrimonial?";
-      } else if (lower.includes("chalet") || lower.includes("villa") || lower.includes("atico") || lower.includes("piso") || lower.includes("casa")) {
-        replyText = "Disponemos de propiedades singulares en Madrid, Barcelona y la Costa Blanca. Te llevo a ver todas las opciones disponibles.";
-        callback = () => { if (window.switchSubpage) window.switchSubpage("propiedades"); };
+      if (lower.includes("precio") || lower.includes("coste") || lower.includes("cuanto") || lower.includes("honorario") || lower.includes("tarifa")) {
+        replyText = "Nuestros honorarios parten del 3% a éxito en compraventa Prime y desde 1.800 € en Home Staging. Puede consultar el desglose completo en la sección de Servicios.";
+        callback = () => { if (window.scrollToSection) window.scrollToSection("servicios"); };
+      } else if (lower.includes("chalet") || lower.includes("villa") || lower.includes("atico") || lower.includes("piso") || lower.includes("propiedad")) {
+        replyText = "Disponemos de activos singulares en Madrid, Barcelona y la Costa Blanca. Le sitúo en nuestra cartera seleccionada.";
+        callback = () => { if (window.scrollToSection) window.scrollToSection("propiedades"); };
       } else if (lower.includes("vender") || lower.includes("tasar") || lower.includes("tasacion") || lower.includes("valor")) {
-        replyText = "Realizamos valoraciones técnicas y de mercado sin compromiso. Te facilito el formulario para solicitar la tasación de tu vivienda.";
-        callback = () => { if (window.switchSubpage) window.switchSubpage("contacto"); };
-      } else if (lower.includes("telefono") || lower.includes("llamada") || lower.includes("cita") || lower.includes("contacto") || lower.includes("oficina")) {
-        replyText = "Nuestras oficinas centrales están en Calle Serrano 48, Madrid. También puedes llamarnos al +34 910 234 567.";
-        callback = () => { if (window.switchSubpage) window.switchSubpage("contacto"); };
+        replyText = "Realizamos dictámenes de mercado y valoraciones RICS con total discreción. Le facilito el formulario para solicitar la valoración.";
+        callback = () => { if (window.scrollToSection) window.scrollToSection("contacto"); };
+      } else if (lower.includes("telefono") || lower.includes("llamada") || lower.includes("cita") || lower.includes("contacto") || lower.includes("oficina") || lower.includes("donde")) {
+        replyText = "Nuestra sede principal está en Paseo de la Castellana 95, Madrid (Telf: +34 910 234 567) y contamos con delegación en Diagonal 640, Barcelona.";
+        callback = () => { if (window.scrollToSection) window.scrollToSection("contacto"); };
+      } else if (lower.includes("equipo") || lower.includes("quienes") || lower.includes("nosotros") || lower.includes("socio")) {
+        replyText = "NEXO está liderado por socios con más de 20 años en banca privada y consultoría inmobiliaria. Le invito a conocer a nuestro equipo directivo.";
+        callback = () => { if (window.scrollToSection) window.scrollToSection("nosotros"); };
       } else if (lower.includes("hola") || lower.includes("buenos") || lower.includes("buenas") || lower.includes("que tal")) {
-        replyText = "¡Hola! Con mucho gusto te asesoro. Puedes ver nuestras propiedades disponibles o solicitar una tasación gratuita.";
+        replyText = "Estimado cliente, es un placer atenderle. ¿Desea consultar nuestra cartera residencial o solicitar la valoración de un activo?";
       } else {
-        replyText = "Gracias por tu mensaje. Un asesor especialista de NEXO se pondrá en contacto contigo para resolver cualquier detalle. ¿Deseas agendar una llamada?";
-        callback = () => { if (window.switchSubpage) window.switchSubpage("contacto"); };
+        replyText = "Muchas gracias por su consulta. Un consultor patrimonial de NEXO coordinará los detalles. ¿Desea que agendemos una llamada o reunión presencial?";
+        callback = () => { if (window.scrollToSection) window.scrollToSection("contacto"); };
       }
 
       replyWithDelay(replyText, callback);
@@ -534,4 +629,3 @@ function initChatbotWidget() {
   window.openChatbot = () => toggleChatbot(true);
   window.closeChatbot = () => toggleChatbot(false);
 }
-
