@@ -249,8 +249,8 @@ section[id] {
 
 @media (max-width: 767px) {
   #chatbot-widget {
-    bottom: 84px; /* Separación sobre la barra rápida móvil */
-    right: 16px;
+    bottom: max(16px, env(safe-area-inset-bottom, 16px));
+    right: max(16px, env(safe-area-inset-right, 16px));
   }
 }
 
@@ -347,24 +347,31 @@ section[id] {
 /* Botón Burbuja Flotante */
 .chatbot-btn {
   pointer-events: auto;
-  width: 62px;
-  height: 62px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   background: linear-gradient(135deg, #0F1E36 0%, #0369A1 100%);
   color: #FFFFFF;
   border: 2px solid rgba(255, 255, 255, 0.25);
-  box-shadow: 0 14px 32px -4px rgba(2, 132, 199, 0.45), 0 6px 14px -2px rgba(15, 30, 54, 0.3);
+  box-shadow: 0 10px 24px -4px rgba(2, 132, 199, 0.45), 0 4px 10px -2px rgba(15, 30, 54, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
   position: relative;
 }
 
+@media (min-width: 768px) {
+  .chatbot-btn {
+    width: 60px;
+    height: 60px;
+  }
+}
+
 .chatbot-btn:hover {
-  transform: scale(1.08) translateY(-2px);
-  box-shadow: 0 18px 38px -4px rgba(2, 132, 199, 0.55), 0 8px 18px -2px rgba(15, 30, 54, 0.35);
+  transform: scale(1.06) translateY(-2px);
+  box-shadow: 0 16px 34px -4px rgba(2, 132, 199, 0.55), 0 6px 16px -2px rgba(15, 30, 54, 0.35);
 }
 
 .chatbot-btn .chatbot-icon-close {
@@ -385,13 +392,13 @@ section[id] {
 
 .chatbot-live-dot {
   position: absolute;
-  top: 3px;
-  right: 3px;
-  width: 14px;
-  height: 14px;
+  top: 2px;
+  right: 2px;
+  width: 13px;
+  height: 13px;
   border-radius: 50%;
   background: #10B981;
-  border: 2.5px solid #FFFFFF;
+  border: 2px solid #FFFFFF;
   box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.3);
 }
 
@@ -399,15 +406,15 @@ section[id] {
 .chatbot-window {
   pointer-events: auto;
   position: absolute;
-  bottom: 76px;
+  bottom: 68px;
   right: 0;
   width: 380px;
-  max-width: calc(100vw - 32px);
-  height: 560px;
-  max-height: calc(100vh - 120px);
+  max-width: calc(100vw - 28px);
+  height: 540px;
+  max-height: calc(100vh - 100px);
   background: #FFFFFF;
   border: 1px solid rgba(203, 216, 230, 0.85);
-  border-radius: 1.75rem;
+  border-radius: 1.5rem;
   box-shadow: 0 28px 64px -14px rgba(15, 30, 54, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.8) inset;
   overflow: hidden;
   display: flex;
@@ -419,8 +426,9 @@ section[id] {
 @media (max-width: 480px) {
   .chatbot-window {
     width: calc(100vw - 24px);
-    right: -4px;
-    height: 520px;
+    right: 0;
+    height: calc(100vh - 90px);
+    max-height: 520px;
   }
 }
 
